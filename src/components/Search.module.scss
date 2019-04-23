@@ -1,0 +1,46 @@
+@import '../libs/variables.scss';
+
+.container{
+  margin: 20px auto;
+  @media only screen and (min-width: 875px) { 
+    margin: 50px auto;
+  }
+  width: 100%;
+  max-width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  .searchInput, .selectInput{
+    box-sizing: border-box;
+    box-shadow: inset 1px 1px 5px $lightShadow;
+    background-color: $lightGray;
+    border: none;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+
+  }
+  .searchInputContainer{
+    width: 50%;
+    min-width: 250px;
+    position: relative;
+    .searchIcon{
+      position: absolute;
+      left: 20px;
+      top: 13px;
+      width: 13px;
+      opacity: .5;
+    }
+    .searchInput{
+      width: 100%;
+      padding-left: 40px; 
+    }
+  }
+  .selectInput{
+    width: 20%;
+    min-width: 135px;
+    text-align: center;
+    text-indent: 10px;
+    color: rgba(0,0,0,.5);
+  }
+}

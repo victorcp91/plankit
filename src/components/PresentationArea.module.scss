@@ -1,0 +1,14 @@
+@import '../libs/variables.scss';
+
+.presentationText{
+  width: 100%;
+  max-width: 80%;
+  margin: 50px auto;
+  font-size: 18px;
+  line-height: 30px;
+  font-family: 'Helvetica Light';
+}
+.divisor{
+  border: 2px solid $lightGray;
+  border-bottom: 0;
+}

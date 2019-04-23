@@ -1,0 +1,132 @@
+[
+  {
+    "label": "Luz",
+    "title": "light",
+    "icon": "sunIcon",
+    "options": [
+      {"title": "direct_light", "text": "Luz intensa e direta(mínimo de 6h de luz ao dia)"
+      },
+      {"title": "half_shadow", "text": "Meia-sombra(cerca de 3h recebendo luz direta e o restante do dia na sombra)"
+      },
+      {"title": "indirect_light", "text": "Luz fraca e indireta"
+      },
+      {"title": "shadow", "text": "Sombra"
+      }
+    ],
+    "options_type": "check"
+  },
+  {
+    "label": "Rega",
+    "title": "watering",
+    "icon": "wateringCanIcon",
+    "options": [
+      {"title": "marshy_ground", "text": "Solo pantanoso(manter solo encharcado)"
+      },
+      {"title": "moist_ground", "text": "Solo úmido(solo drenado)"
+      },
+      {"title": "dry_ground", "text": "Solo seco"
+      },
+      {"title": "sprinkler_watering", "text": "Utilizando borrifador"
+      }
+    ],
+    "options_type": "check"
+  },
+  {
+    "label": "Plantio",
+    "title": "planting",
+    "icon": "shovelIcon",
+    "options": [
+      {"title": "ground_planting", "text": "Terra"
+      },
+      {"title": "aerial_plant", "text": "Troncos, musgos e substratos(plantas aéreas)"
+      },
+      {"title": "water_plant", "text": "Água"
+      }
+    ],
+    "options_type": "check"
+  },
+  {
+    "label": "Tamanho",
+    "title": "size",
+    "icon": "treeIcon",
+    "options": [
+      {"title": "small_size", "text": "Pequeno porte"
+      },
+      {"title": "midsize", "text": "Médio porte"
+      },
+      {"title": "large", "text": "Grande porte"
+      },
+      {"title": "tree", "text": "Árvore"
+      }
+    ],
+    "options_type": "check"
+  },
+  {
+    "label": "Horta",
+    "title": "vegetable_garden",
+    "icon": "carrotIcon",
+    "options": [
+      {"title": "vegetable_leaves", "text": "Verduras"
+      },
+      {"title": "vegetable", "text": "Legumes"
+      },
+      {"title": "herbs", "text": "Ervas"
+      },
+      {"title": "pancs", "text": "Plantas alimentícias não convencionais"
+      },
+      {"title": "_hide", "text": "Não exibir plantas de horta"
+      }
+    ],
+    "options_type": "check"
+  },
+  {
+    "label": "Frutífera",
+    "title": "fruitful",
+    "icon": "orangeIcon",
+    "options": [
+      {"title": "_show", "text": "Exibir"
+      },
+      {"title": "_hide", "text": "Não exibir"
+      }
+    ],
+    "options_type": "choose"
+  },
+  {
+    "label": "Florífera",
+    "title": "floriferous",
+    "icon": "flowerIcon",
+    "options": [
+      {"title": "_show", "text": "Exibir"
+      },
+      {"title": "_hide", "text": "Não exibir"
+      }
+    ],
+    "options_type": "choose"
+  },
+  {
+    "label": "Trepadeira",
+    "title": "bindweed",
+    "icon": "wheatIcon",
+    "options": [
+      {"title": "_show", "text": "Exibir"
+      },
+      {"title": "_hide", "text": "Não exibir"
+      }
+    ],
+    "options_type": "choose"
+  },
+  {
+    "label": "Perigosa",
+    "title": "dangerous",
+    "icon": "warningIcon",
+    "options": [
+      {"title": "thorns", "text": "Espinhos"
+      },
+      {"title": "poisonous", "text": "Venenosa"
+      },
+      {"title": "_hide", "text": "Não exibir plantas perigosas"
+      }
+    ],
+    "options_type": "check"
+  }
+]

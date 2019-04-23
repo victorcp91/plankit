@@ -1,0 +1,102 @@
+@import '../libs/variables.scss';
+body{
+  background-color: $backgroundLightGray;
+  font-family: 'Helvetica';
+}
+.header{
+  width: 100%;
+  max-height: 48px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: $backgroundLightGray;
+  .container{
+    display: flex;
+  }
+  .logoContainer{
+    flex: 1;
+    .logoIcon{
+      max-width: 25px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-top: -5px;
+    }
+    .logoName{
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+      font-family: 'Myriad Pro', sans-serif;
+      color: $black;
+      font-size: 25px;
+      .textGreen{
+        color: $green;
+      }
+    }
+  }
+  .userMenuContainer{
+    text-align: right;
+    position: relative;
+    .userMenuButton{
+      border: none;
+      background-color: transparent;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+      .userIcon, .userAvatar{
+        display: block;
+        width: 25px;
+        height: 25px;
+      }
+      .userAvatar{
+        border-radius: 50%;
+      }
+    }
+    .userOptions{
+      position: absolute;
+      align-items: center;
+      right:-10px;
+      top: 34px;
+      z-index: 1;
+      background-color: $gray;
+      min-width: 100px;
+      min-height: 50px;
+      box-sizing: border-box;
+      padding: 10px;
+      &:before{
+        content:'';
+        position: absolute;
+        display: block;
+        width: 10px;
+        height: 10px;
+        background-color: $gray;
+        top: -5px;
+        right: 17px;
+        transform: rotate(45deg);
+        z-index: 0;
+      }
+      .option{
+        width: 100%;
+        text-align: center;
+        margin: 5px 0;
+        .loginButton,.link{
+          width: 100%;
+          border: none;
+          background-color: transparent;
+          color: $white;
+          font-family: 'Helvetica Rounded Bold';
+          font-size: 12px;
+          text-decoration: none;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .loginContainerOverlay{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.5);
+    z-index: 2;
+    top: 0;
+    left: 0;
+  }
+}

@@ -1,0 +1,138 @@
+@import '../libs/variables.scss';
+
+.container{
+  margin: 20px auto 50px auto;
+  @media only screen and (min-width: 875px) { 
+    margin: 50px auto;
+  }
+  width: 100%;
+  max-width: calc(80% + 40px);
+  position: relative;
+  .filtersSelectors{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    .selector{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      margin: 20px;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      .iconContainer{
+        background-color: $lightGray;
+        box-shadow: inset 1px 1px 5px $lightShadow;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color .5s cubic-bezier(0.630, 1.235, 1.000, 0.965);
+        .icon{
+          width: 32px;
+        }
+      }
+      .filterLabel{
+        margin-top: 5px;
+        font-size: 14px;
+        position: absolute;
+        bottom: -25px;
+        color: $gray;
+        transition: color .5s cubic-bezier(0.630, 1.235, 1.000, 0.965);
+      }
+      &:hover{
+        .iconContainer{
+          background-color: $gray;
+        }
+        .filterLabel{
+          color: $black;
+        }
+      }
+      &.selected{
+        .iconContainer{
+          background-color: $gray;
+        }
+        .filterLabel{
+          color: $black;
+        }
+      }
+    }
+  }
+  .iconFields{
+    width: 100%;
+    top: 120%;
+    position: absolute;
+    background-color: rgba(247,247,247,.8);
+    padding: 0px;
+    margin: 0;
+    box-sizing: border-box;
+    border-bottom:2px solid $lightGray;
+    transition: max-height .5s ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+    @media only screen and (min-width: 875px) { 
+      width: 120% ;
+      left: -10%;
+    }
+    &.active{
+      max-height: 500px;
+      padding: 20px 50px;
+    }
+    .checkItem{
+      margin: 10px 0;
+      position: relative;
+      .checkInput,.radioInput{
+        margin-right: 10px;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        vertical-align: middle;
+        &:checked + .inputStyle::after{
+          content: '';
+          display: block;
+          width: 10px;
+          position: absolute;
+          height: 10px;
+          left: 25%;
+          top: 25%;
+          background-color: $green;
+        }
+        &:checked + .radioStyle::after{
+          content: '';
+          display: block;
+          width: 10px;
+          position: absolute;
+          height: 10px;
+          left: 25%;
+          top: 25%;
+          background-color: $green;
+          border-radius: 50%;
+        }
+      }
+      .inputStyle,.radioStyle{
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        left: 0px;
+        background-color: $gray;
+        cursor: pointer;
+      }
+      .radioStyle{
+        border-radius: 50%;
+      }
+    }
+    .show{
+      color: $green;
+    }
+    .hide{
+      color: $red;
+    }
+  }
+}

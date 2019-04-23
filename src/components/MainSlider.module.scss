@@ -1,0 +1,77 @@
+@import '../libs/variables.scss';
+
+.slider{
+  width: 100%;
+  overflow: hidden;
+  .sliderImage{
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+  }
+  .dots{
+    bottom: 10px;
+    button:before{
+      font-size: 15px;
+      color: $white;
+      opacity: 1;
+    }
+    .slick-active{
+      button:before{
+        font-size: 15px;
+        opacity: 1;
+      }
+    }
+  }
+  .prevArrow,.nextArrow{
+    position: absolute;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    top: 50%;
+    background-color: $backgroundLightGray;
+    box-shadow: inset 2px 1px 3px rgba(0,0,0,.3);
+    cursor: pointer;
+    @media only screen and (min-width: 875px) { 
+      width: 80px;
+      height: 80px;
+    }
+    
+  }
+  .prevArrow{
+    left: 0;
+    transform: translate(-51%, -50%);
+    .prevIcon{
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-left: 2px solid black;
+      border-bottom: 2px solid black;
+      right: 3px;
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+      @media only screen and (min-width: 875px) { 
+        right: 12px;
+      }
+    }
+  }
+  .nextArrow{
+    right: 0;
+    transform: translate(51%, -50%);
+    .nextIcon{
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      left: 3px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-45deg);
+      @media only screen and (min-width: 875px) { 
+        left: 12px;
+      }
+    }
+  }
+}
+
+

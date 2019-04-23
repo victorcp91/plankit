@@ -1,0 +1,170 @@
+[
+	{
+		"id": 1,
+		"name": {
+				"default": "toxic",
+				"pt-br": "venenoso"
+		}
+	},
+	{
+		"id": 2,
+		"name": {
+				"default": "thorns",
+				"pt-br": "espinhos"
+		}
+	},
+	{
+		"id": 3,
+		"name": {
+				"default": "aquatic",
+				"pt-br": "aquático"
+		}
+	},
+	{
+		"id": 4,
+		"name": {
+				"default": "bush",
+				"pt-br": "arbusto"
+		}
+	},
+	{
+		"id": 5,
+		"name": {
+				"default": "bamboo",
+				"pt-br": "bambú"
+		}
+	},
+	{
+		"id": 6,
+		"name": {
+				"default": "cactus",
+				"pt-br": "cacto"
+		}
+	},
+	{
+		"id": 7,
+		"name": {
+				"default": "grass",
+				"pt-br": "grama"
+		}
+	},
+	{
+		"id": 8,
+		"name": {
+				"default": "carnivorous",
+				"pt-br": "carnívora"
+		}
+	},
+	{
+		"id": 9,
+		"name": {
+				"default": "coníferous",
+				"pt-br": "conífera"
+		}
+	},
+	{
+		"id": 10,
+		"name": {
+				"default": "flowers",
+				"pt-br": "flores"
+		}
+	},
+	{
+		"id": 11,
+		"name": {
+				"default": "foliage",
+				"pt-br": "folhagem"
+		}
+	},
+	{
+		"id": 12,
+		"name": {
+				"default": "lining",
+				"pt-br": "forração"
+		}
+	},
+	{
+		"id": 13,
+		"name": {
+				"default": "frutful",
+				"pt-br": "frutífera"
+		}
+	},
+	{
+		"id": 14,
+		"name": {
+				"default": "grains",
+				"pt-br": "grãos"
+		}
+	},
+	{
+		"id": 15,
+		"name": {
+				"default": "vegetable",
+				"pt-br": "hortaliça"
+		}
+	},
+	{
+		"id": 16,
+		"name": {
+				"default": "orchids",
+				"pt-br": "orquídea"
+		}
+	},
+	{
+		"id": 17,
+		"name": {
+				"default": "palm tree",
+				"pt-br": "palmeiras"
+		}
+	},
+	{
+		"id": 18,
+		"name": {
+				"default": "fern",
+				"pt-br": "samambaia"
+		}
+	},
+	{
+		"id": 19,
+		"name": {
+				"default": "succulent",
+				"pt-br": "suculenta"
+		}
+	},
+	{
+		"id": 20,
+		"name": {
+				"default": "climbing",
+				"pt-br": "trepadeira"
+		}
+	},
+	{
+		"id": 21,
+		"name": {
+				"default": "edible weed",
+				"pt-br": "PANCs"
+		}
+	},
+	{
+		"id": 22,
+		"name": {
+				"default": "bromeliad",
+				"pt-br": "bromélia"
+		}
+	},
+	{
+		"id": 23,
+		"name": {
+				"default": "weed",
+				"pt-br": "erva daninha"
+		}
+	},
+	{
+		"id": 24,
+		"name": {
+				"default": "perfumed",
+				"pt-br": "perfumada"
+		}
+	} 
+]

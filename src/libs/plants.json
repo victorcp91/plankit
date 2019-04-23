@@ -1,0 +1,92 @@
+[
+  { 
+    "id": 1, 
+    "title": "Costela de Adão", 
+    "scientificName": "Dieffenbachia seguine", 
+    "img": "", 
+    "tags": ["direct_light","moist_ground", "water_plant","large"],
+    "price": "90.00 - 150.00",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris ultrices eros in cursus turpis. Faucibus scelerisque eleifend donec pretium vulputate sapien. Turpis egestas integer eget aliquet nibh praesent tristique magna sit. Malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Non sodales neque sodales ut etiam. Risus viverra adipiscing at in tellus integer. Tortor at auctor urna nunc id cursus metus. Quam viverra orci sagittis eu volutpat odio. Viverra mauris in aliquam sem fringilla. Euismod lacinia at quis risus. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Convallis convallis tellus id interdum velit laoreet id donec. Posuere ac ut consequat semper viverra nam libero justo. Eget aliquet nibh praesent tristique magna."
+  },
+  { 
+    "id": 2, 
+    "title": "Bromélia Imperial", 
+    "scientificName": "Dieffenbachia seguine", 
+    "img": "", 
+    "tags": [],
+    "price": "90.00 - 150.00",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris ultrices eros in cursus turpis. Faucibus scelerisque eleifend donec pretium vulputate sapien. Turpis egestas integer eget aliquet nibh praesent tristique magna sit. Malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Non sodales neque sodales ut etiam. Risus viverra adipiscing at in tellus integer. Tortor at auctor urna nunc id cursus metus. Quam viverra orci sagittis eu volutpat odio. Viverra mauris in aliquam sem fringilla. Euismod lacinia at quis risus. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Convallis convallis tellus id interdum velit laoreet id donec. Posuere ac ut consequat semper viverra nam libero justo. Eget aliquet nibh praesent tristique magna."
+  },
+  { 
+    "id": 3, 
+    "title": "Couve-flor", 
+    "scientificName": "", 
+    "img": "", 
+    "tags": ["vegetable_leaves","vegetable","floriferous"],
+    "price": "90.00 - 150.00",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris ultrices eros in cursus turpis. Faucibus scelerisque eleifend donec pretium vulputate sapien. Turpis egestas integer eget aliquet nibh praesent tristique magna sit. Malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Non sodales neque sodales ut etiam. Risus viverra adipiscing at in tellus integer. Tortor at auctor urna nunc id cursus metus. Quam viverra orci sagittis eu volutpat odio. Viverra mauris in aliquam sem fringilla. Euismod lacinia at quis risus. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Convallis convallis tellus id interdum velit laoreet id donec. Posuere ac ut consequat semper viverra nam libero justo. Eget aliquet nibh praesent tristique magna."
+  },
+  { 
+    "id": 4, 
+    "title": "Comigo-ninguém-pode", 
+    "scientificName": "Dieffenbachia seguine", 
+    "img": "", 
+    "tags": [],
+    "price": "90.00 - 150.00",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris ultrices eros in cursus turpis. Faucibus scelerisque eleifend donec pretium vulputate sapien. Turpis egestas integer eget aliquet nibh praesent tristique magna sit. Malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Non sodales neque sodales ut etiam. Risus viverra adipiscing at in tellus integer. Tortor at auctor urna nunc id cursus metus. Quam viverra orci sagittis eu volutpat odio. Viverra mauris in aliquam sem fringilla. Euismod lacinia at quis risus. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Convallis convallis tellus id interdum velit laoreet id donec. Posuere ac ut consequat semper viverra nam libero justo. Eget aliquet nibh praesent tristique magna."
+  },
+  { 
+    "id": 5, 
+    "title": "Espada de São Jorge", 
+    "scientificName": "Dieffenbachia seguine", 
+    "img": "", 
+    "tags": [],
+    "price": "90.00 - 150.00",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris ultrices eros in cursus turpis. Faucibus scelerisque eleifend donec pretium vulputate sapien. Turpis egestas integer eget aliquet nibh praesent tristique magna sit. Malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Non sodales neque sodales ut etiam. Risus viverra adipiscing at in tellus integer. Tortor at auctor urna nunc id cursus metus. Quam viverra orci sagittis eu volutpat odio. Viverra mauris in aliquam sem fringilla. Euismod lacinia at quis risus. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Convallis convallis tellus id interdum velit laoreet id donec. Posuere ac ut consequat semper viverra nam libero justo. Eget aliquet nibh praesent tristique magna."
+  },
+  { 
+    "id": 6, 
+    "title": "Costela de Adão", 
+    "scientificName": "Dieffenbachia seguine", 
+    "img": "", 
+    "tags": [],
+    "price": "90.00 - 150.00",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris ultrices eros in cursus turpis. Faucibus scelerisque eleifend donec pretium vulputate sapien. Turpis egestas integer eget aliquet nibh praesent tristique magna sit. Malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Non sodales neque sodales ut etiam. Risus viverra adipiscing at in tellus integer. Tortor at auctor urna nunc id cursus metus. Quam viverra orci sagittis eu volutpat odio. Viverra mauris in aliquam sem fringilla. Euismod lacinia at quis risus. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Convallis convallis tellus id interdum velit laoreet id donec. Posuere ac ut consequat semper viverra nam libero justo. Eget aliquet nibh praesent tristique magna."
+  },
+  { 
+    "id": 7, 
+    "title": "Bromélia Imperial", 
+    "scientificName": "Dieffenbachia seguine", 
+    "img": "", 
+    "tags": [],
+    "price": "90.00 - 150.00",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris ultrices eros in cursus turpis. Faucibus scelerisque eleifend donec pretium vulputate sapien. Turpis egestas integer eget aliquet nibh praesent tristique magna sit. Malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Non sodales neque sodales ut etiam. Risus viverra adipiscing at in tellus integer. Tortor at auctor urna nunc id cursus metus. Quam viverra orci sagittis eu volutpat odio. Viverra mauris in aliquam sem fringilla. Euismod lacinia at quis risus. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Convallis convallis tellus id interdum velit laoreet id donec. Posuere ac ut consequat semper viverra nam libero justo. Eget aliquet nibh praesent tristique magna."
+  },
+  { 
+    "id": 8, 
+    "title": "Couve-flor", 
+    "img": "", 
+    "scientificName": "Dieffenbachia seguine", 
+    "tags": [],
+    "price": "90.00 - 150.00",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris ultrices eros in cursus turpis. Faucibus scelerisque eleifend donec pretium vulputate sapien. Turpis egestas integer eget aliquet nibh praesent tristique magna sit. Malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Non sodales neque sodales ut etiam. Risus viverra adipiscing at in tellus integer. Tortor at auctor urna nunc id cursus metus. Quam viverra orci sagittis eu volutpat odio. Viverra mauris in aliquam sem fringilla. Euismod lacinia at quis risus. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Convallis convallis tellus id interdum velit laoreet id donec. Posuere ac ut consequat semper viverra nam libero justo. Eget aliquet nibh praesent tristique magna."
+  },
+  { 
+    "id": 9, 
+    "title": "Comigo-ninguém-pode", 
+    "scientificName": "Dieffenbachia seguine", 
+    "img": "", 
+    "tags": [],
+    "price": "90.00 - 150.00",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris ultrices eros in cursus turpis. Faucibus scelerisque eleifend donec pretium vulputate sapien. Turpis egestas integer eget aliquet nibh praesent tristique magna sit. Malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Non sodales neque sodales ut etiam. Risus viverra adipiscing at in tellus integer. Tortor at auctor urna nunc id cursus metus. Quam viverra orci sagittis eu volutpat odio. Viverra mauris in aliquam sem fringilla. Euismod lacinia at quis risus. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Convallis convallis tellus id interdum velit laoreet id donec. Posuere ac ut consequat semper viverra nam libero justo. Eget aliquet nibh praesent tristique magna."
+  },
+  { 
+    "id": 10, 
+    "title": "Espada de São Jorge", 
+    "scientificName": "Dieffenbachia seguine", 
+    "img": "", 
+    "tags": [],
+    "price": "90.00 - 150.00",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris ultrices eros in cursus turpis. Faucibus scelerisque eleifend donec pretium vulputate sapien. Turpis egestas integer eget aliquet nibh praesent tristique magna sit. Malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Non sodales neque sodales ut etiam. Risus viverra adipiscing at in tellus integer. Tortor at auctor urna nunc id cursus metus. Quam viverra orci sagittis eu volutpat odio. Viverra mauris in aliquam sem fringilla. Euismod lacinia at quis risus. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Convallis convallis tellus id interdum velit laoreet id donec. Posuere ac ut consequat semper viverra nam libero justo. Eget aliquet nibh praesent tristique magna."
+  }
+]

@@ -1,0 +1,10 @@
+@import '../libs/variables.scss';
+
+.loginContainer{
+  position: fixed;
+  background-color: $backgroundLightGray;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}

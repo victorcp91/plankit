@@ -1,0 +1,36 @@
+{
+	"id": 1,
+	"name":{
+		"popular": {
+			"default": "popular name",
+			"pt-br": "nome popular"
+		},
+		"other":{
+			"default": ["other name", "other name 2"],
+			"pt-br": ["outro nome", "outro nome 2"]
+		}
+	},
+	"order": "Rosales",
+	"family": "Amaranthaceae",
+	"subfamily": null,
+	"tribe": null,
+	"subtribe": null,
+	"gender": "Amaranthoideae",
+	"specie": "Iresine herbstii",
+	"origin": ["BR"],
+	"light": "direct", //direct, half_shade, shade
+	"flowering": null, //spring, summer, autumn, winter,
+	"planting": ["whole_year"], //spring, summer, autumn, winter, whole_year
+	"fruits": "edible", //non-edible, edible
+	"propagation": ["seedling"], //seed, seedles, stake,  
+	"watering_frequency":{
+		"times": 2,
+		"frequency": "month" //week, month, year
+	},
+	"size": "medium", //small, medium, large, tree
+	"care": 1,
+	"characteristics":[1,2,3],
+	"deseases": [1,2],
+	"info": "text"
+}
+

@@ -1,56 +1,139 @@
 import React, { useState, useEffect } from 'react';
 import firebase from "firebase/app";
+import { connect } from 'react-redux';
 
 import Api from '../libs/Api';
+import { setUser, removeGardemPlant } from '../store/user';
 
 import css from './MyArea.module.scss';
+import Plants from '../components/Plants';
+import NewPlant from '../components/NewPlant';
+import optionsIcon from '../assets/icons/optionsIcon.svg';
 import houseIcon from '../assets/icons/houseIcon.svg';
+import heartIcon from '../assets/icons/heartIcon.svg';
+import myWishesIcon from '../assets/icons/myWishesIcon.svg';
+import newPlantIcon from '../assets/icons/newPlantIcon.svg';
+
+
 
 const myArea = props => {
-  const [plants, setPlants] = useState([]);
-  const [user, setUser] = useState(false)
+  const [currentSection, setCurrentSection] = useState('myGarden');
+  const [iconAnimation, setIconAnimation] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        setUser(user);
+        Api.getUserData(user.uid).then(userData => {
+          setUser({ ...userData });
+        })
       } else {
-        setUser(false);
+        setUser(null);
       }
     });
   }, []);
 
+  useEffect(() => {
+    setIconAnimation(false);
+    setTimeout(() => {
+      setIconAnimation(true);
+    }, 100);
+  }, [currentSection]);
+  
+
+  const setMyGardenSection = () => {
+    setCurrentSection('myGarden');
+  }
+  const setMyWishesSection = () => {
+    setCurrentSection('myWishes');
+  }
+  const setNewPlantSection = () => {
+    setCurrentSection('newPlant');
+  }
+  const setMyStoreSection = () => {
+    setCurrentSection('myStore');
+  }
+
+  const loadSectionIcon = () => {
+    switch(currentSection){
+      case 'myGarden': 
+        return houseIcon;
+      case 'myWishes': 
+        return myWishesIcon;
+      case 'newPlant': 
+        return newPlantIcon;
+      case 'myStore': 
+        return houseIcon;
+      default:
+        return null
+    }
+  }
+
+  const removeFromGardem = (plant) => {
+    const user = { ...props.user };
+    removeGardemPlant(plant.id);
+    Api.removeGardemPlant(user,plant).then(() => {
+      Api.getUserData(props.user.uid).then(userData => {
+        setUser({ ...userData });
+      });
+    });
+  }
+
+  const myGardem = () => {
+    return (
+      <Plants
+        plants={props.user.gardem}
+        user={props.user}
+        removeGardemPlant={removeFromGardem} 
+        myArea
+      />
+    )
+  }
   
   return(
     <div className={css.container}>
-      <sidebar className={css.myAreaMenu}>
-        <div className={css.selectedItemIcon}>
-          <img className={css.icon} src={houseIcon} alt="Meu Jardim"/>
+      <aside className={css.myAreaMenu}>
+        <div className={`${css.selectedItemIcon}  ${iconAnimation ? css.animate : '' }`}>
+          <img className={css.icon} src={loadSectionIcon()} alt="Meu Jardim"/>
         </div>
         <ul>
-          <li className={`${css.menuItem} ${css.myGarden}`}>
-            <img className={css.icon} src={houseIcon} alt="Meu Jardim" />
-            <span className={css.label}>Meu Jardim</span>
+          <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'myGarden' ? css.active : ''}`}>
+            <button onClick={setMyGardenSection}>
+              <img className={css.icon} src={houseIcon} alt="Meu Jardim" />
+              <span className={css.label}>Meu Jardim</span>
+            </button>
           </li>
-          <li className={`${css.menuItem} ${css.myGarden}`}>
-            <img className={css.icon} src={houseIcon} alt="Meu Jardim" />
-            <span className={css.label}>Meus Desejos</span>
+          <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'myWishes' ? css.active : ''}`}>
+            <button onClick={setMyWishesSection}>
+              <img className={css.icon} src={myWishesIcon} alt="Meus Desejos" />
+              <span className={css.label}>Meus Desejos</span>
+            </button>
           </li>
-          <li className={`${css.menuItem} ${css.myGarden}`}>
-            <img className={css.icon} src={houseIcon} alt="Meu Jardim" />
-            <span className={css.label}>Cadastrar Nova Espécie</span>
+          <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'newPlant' ? css.active : ''}`}>
+            <button onClick={setNewPlantSection}>
+              <img className={css.icon} src={newPlantIcon} alt="Cadastrar Nova Espécie" />
+              <span className={css.label}>Nova Espécie</span>
+            </button>
           </li>
-          <li className={`${css.menuItem} ${css.myGarden}`}>
-            <img className={css.icon} src={houseIcon} alt="Meu Jardim" />
-            <span className={css.label}>Minha Loja</span>
+          <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'myStore' ? css.active : ''}`}>
+            <button onClick={setMyStoreSection}>
+              <img className={css.icon} src={houseIcon} alt="Meu Jardim" />
+              <span className={css.label}>Minha Loja</span>
+            </button>
           </li>
         </ul>
-      </sidebar>
+      </aside>
       <main className={css.content}>
-        <h1>{user ?`Olá, ${user.displayName}!`: 'Olá!'}</h1>
+        <div className={css.welcomeArea}>
+          <h1 className={css.welcome}>{props.user.display_name ?`Bom dia, ${props.user.display_name.split(' ')[0]}!`: 'Bom dia!'}</h1>
+        </div>
+        {currentSection === 'myGarden' && myGardem()}
+        {currentSection === 'myWishes' && <div>My Wishes</div>}
+        {currentSection === 'newPlant' && <NewPlant/>}
+        {currentSection === 'myStore' && <div>My Store</div>}
       </main>
     </div>
   )
 };
+const mapStateToProps = ({ plants, user }) => ({ plants, user });
 
-export default myArea;
+export default connect(mapStateToProps)(myArea);

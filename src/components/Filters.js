@@ -16,6 +16,8 @@ import filtersList from '../libs/filters.json';
 const filters = props => {
   const [selectedSession, setSelectedSession] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [leftArrow, setLeftArrow] = useState(false);
+  const [rightArrow, setRightArrow] = useState(true);
 
   const wrapperRef = useRef(null);
 
@@ -29,6 +31,19 @@ const filters = props => {
   const handleClickOutside = event => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
       setSelectedSession(null);
+    }
+  };
+
+  const handleFiltersScroll = event => {
+    if(event.currentTarget.scrollLeft > 0){
+      setLeftArrow(true);
+    } else {
+      setLeftArrow(false);
+    }
+    if(event.currentTarget.scrollLeft + event.currentTarget.offsetWidth < event.currentTarget.scrollWidth){
+      setRightArrow(true);
+    } else {
+      setRightArrow(false);
     }
   };
 
@@ -67,7 +82,7 @@ const filters = props => {
       switch (session.options_type){
         case 'choose':
           return session.options.map(option => (
-            <div key={session.title} className={css.checkItem}>
+            <div key={option.title} className={css.checkItem}>
               <input
                 type="radio"
                 id={session.title}
@@ -86,7 +101,7 @@ const filters = props => {
           ));
         case 'check':
           return session.options.map(option => (
-            <div key={session.title} className={css.checkItem}>
+            <div key={option.title} className={css.checkItem}>
               <input
                 type="checkbox"
                 id={session.title}
@@ -111,11 +126,16 @@ const filters = props => {
 
   return (
     <div className={css.container} ref={wrapperRef}>
-      <div className={css.filtersSelectors}>
-        {filtersList.map((filter) => (
+      <div
+        className={css.filtersSelectors}
+        onScroll={handleFiltersScroll}>
+        {leftArrow && <span className={css.previous} />}
+        {filtersList.map((filter,index) => (
           <button
             key={filter.title}
-            className={`${css.selector} ${selectedSession === filter.title ? css.selected : ''}`}
+            className={`${css.selector}
+              ${selectedSession === filter.title ? css.selected : ''}
+              ${filtersList.length -1 === index ?  css.last : ''}`}
             onClick={() => selectSession(filter.title)}
             >
             <span className={css.iconContainer}>
@@ -124,6 +144,7 @@ const filters = props => {
             <span className={css.filterLabel}>{filter.label}</span>
           </button>
         ))}
+        {rightArrow && <span className={css.next} />}
       </div>
       <div className={`${css.iconFields} ${selectedSession ? css.active : ''}`}>
         {generateFilters()}

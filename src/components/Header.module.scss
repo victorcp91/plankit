@@ -9,8 +9,13 @@ body{
   padding: 10px;
   box-sizing: border-box;
   background-color: $backgroundLightGray;
+  position: fixed;
+  z-index: 5;
   .container{
     display: flex;
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
   }
   .logoContainer{
     flex: 1;

@@ -1,30 +1,99 @@
 @import '../libs/variables.scss';
 
 .container{
-  margin: 20px auto 50px auto;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  @media only screen and (min-width: 600px) { 
+    flex-wrap: wrap;
+    margin: 20px auto 50px auto;
+    width: 100%;
+    max-width: calc(80% + 40px);
+  }
   @media only screen and (min-width: 875px) { 
     margin: 50px auto;
   }
-  width: 100%;
-  max-width: calc(80% + 40px);
-  position: relative;
   .filtersSelectors{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    padding-bottom: 10px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    .previous{
+      display: block;
+      position: absolute;
+      z-index: 1;
+      box-sizing: border-box;
+      width: 30px;
+      height: 100%;
+      background-image: linear-gradient(to left, transparent 0, $backgroundLightGray 20%);
+      top: 0;
+      left: 0;
+      @media only screen and (min-width: 600px) { 
+        display: none;
+      }
+      &:after{
+        content: '';
+        display: block;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-bottom: 2px solid black;
+        border-left: 2px solid black;
+        top: 50%;
+        left: 5px;
+        transform: translate(50%, -50%) rotate(45deg);
+      }
+    }
+    .next{
+      display: block;
+      position: absolute;
+      box-sizing: border-box;
+      width: 30px;
+      height: 100%;
+      background-image: linear-gradient(to right, transparent 0, $backgroundLightGray 20%);
+      top: 0;
+      right: 0;
+      @media only screen and (min-width: 600px) { 
+        display: none;
+      }
+      &:after{
+        content: '';
+        display: block;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-bottom: 2px solid black;
+        border-right: 2px solid black;
+        top: 50%;
+        right: 5px;
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+    }
+    @media only screen and (min-width: 600px) { 
+      flex-wrap: wrap;
+    }
     .selector{
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
-      margin: 20px;
+      margin: 35px 3.5%;
       padding: 0;
       border: none;
       background-color: transparent;
       cursor: pointer;
+      &.last{
+        padding-right: 40px;
+      }
+      @media only screen and (min-width: 600px) { 
+        margin: 20px;
+        &.last{
+          padding-right: 0;
+        }
+      }
       .iconContainer{
         background-color: $lightGray;
         box-shadow: inset 1px 1px 5px $lightShadow;
@@ -66,6 +135,7 @@
     }
   }
   .iconFields{
+    z-index: 5;
     width: 100%;
     top: 120%;
     position: absolute;

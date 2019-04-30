@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import firebase from "firebase/app";
 import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import Api from '../libs/Api';
+import { setUser } from '../store/user';
 
 import css from './LoginModal.module.scss';
 
@@ -16,9 +18,24 @@ const loginModal = props => {
     }
   }, []);
 
+  const signInSuccess = (auth) => {
+    Api.getUserData(auth.user.uid).then((userData) => {
+      if(!userData){
+        Api.createUser(auth.user).then(() => {
+          Api.getUserData(auth.user.uid).then((userData) => {
+            setUser({ ...userData });
+          })
+        });
+      }else{
+        setUser({ ...userData });
+      }
+    })
+    props.close();
+  }
+
   const uiConfig = {
     callbacks: {
-      signInSuccessWithAuthResult: () => props.close()
+      signInSuccessWithAuthResult: (authResult) => signInSuccess(authResult)
     },
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: 'popup',
@@ -42,7 +59,12 @@ const loginModal = props => {
   };
 
   return(
-      <div className={css.loginContainer} ref={wrapperRef}>
+      <div className={`${css.loginContainer} ${props.disclaimer ? css.withDisclaimer : ''}`} ref={wrapperRef}>
+        {props.disclaimer ?
+          <p className={css.disclaimer}>
+            {props.disclaimer}
+          </p>
+        : null}
         <StyledFirebaseAuth
           uiConfig={uiConfig}
           firebaseAuth={firebase.auth()}

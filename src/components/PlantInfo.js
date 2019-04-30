@@ -68,9 +68,9 @@ const plantInfo = props => {
         />
       <div className={css.imageContainer} style={{backgroundImage: `url(${plant.image})`}} />
       <div className={css.infoContainer}>
-        <h3 className={css.plantTitle}>{plant['popular_name_pt-br']}</h3>
+        <h3 className={css.plantTitle}>{plant.popular_name_pt_br}</h3>
         <div className={css.plantPrice}>
-          R$ <span className={css.green}>{plant.price.maximum_real}</span>
+          R$ <span className={css.green}>{plant.price.maximum_brl}</span>
         </div>
         <div className={css.actionsContainer}>
           <div className={css.buttonArea}>

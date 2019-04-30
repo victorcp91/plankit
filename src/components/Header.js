@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import firebase from "firebase/app";
+import { connect } from 'react-redux';
+
+import Api from '../libs/Api';
+import { setUser, deleteUser } from '../store/user';
 
 import css from './Header.module.scss';
 import logoIcon from '../assets/icons/plankitIcon.svg';
@@ -8,10 +12,10 @@ import userIcon from '../assets/icons/userIcon.svg';
 import LoginModal from './LoginModal';
 
 
-const home = props => {
+const header = props => {
+
   const [ menuActive, setMenuActive ] = useState(false);
   const [ loginModalActive, setLoginModalActive ] = useState(false);
-  const [ user , setUser ] = useState(false);
 
   const wrapperRef = useRef(null);
 
@@ -19,9 +23,11 @@ const home = props => {
     document.addEventListener("click", handleClickOutside, false);
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        setUser(user);
+        Api.getUserData(user.uid).then(userData => {
+          setUser({ ...userData });
+        })
       } else {
-        setUser(false);
+        deleteUser();
       }
     });
     return () => {
@@ -53,7 +59,7 @@ const home = props => {
   const logout = () => {
     firebase.auth().signOut();
     setMenuActive(!menuActive);
-    setUser(false);
+    deleteUser();
   }
 
   return (
@@ -67,13 +73,13 @@ const home = props => {
         </div>
         <div className={css.userMenuContainer} ref={wrapperRef}>
           <button onClick={toogleUserMenu} className={css.userMenuButton}>
-            {user ?
-            <img src={user.photoURL} className={css.userAvatar} alt={user.displayName}/>
+            {props.user.uid ?
+            <img src={props.user.avatar} className={css.userAvatar} alt={props.user.display_name}/>
             :<img src={userIcon} className={css.userIcon} alt="User" />}
           </button>
           {menuActive ? 
             <ul className={css.userOptions}>
-              {user ? 
+              {props.user.uid ? 
               <>
                 <li className={css.option}>
                   <Link 
@@ -112,4 +118,6 @@ const home = props => {
   )
 };
 
-export default home;
+const mapStateToProps = ({ user }) => ({ user });
+
+export default connect(mapStateToProps)(header);

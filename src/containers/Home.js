@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import firebase from "firebase/app";
+import { connect } from 'react-redux';
 
 import Api from '../libs/Api';
+import { setPlants }  from  '../store/plants';
+import { setUser, addGardemPlant, removeGardemPlant } from '../store/user';
 
 import css from './Home.module.scss';
 import MainSlider from '../components/MainSlider';
@@ -10,14 +14,32 @@ import Filters from '../components/Filters';
 import Plants from '../components/Plants';
 
 const home = props => {
-  const [plants, setPlants] = useState([]);
 
   useEffect(() => {
     Api.getPlants().then((res) => {
       setPlants(res);
-      console.log(res)
     });
   }, []);
+
+  const addToGardem = (plant) => {
+    const user = { ...props.user };
+    addGardemPlant(user, plant);
+    Api.addGardemPlant(user, plant).then(() => {
+      Api.getUserData(props.user.uid).then(userData => {
+        setUser({ ...userData });
+      });
+    });
+  }
+
+  const removeFromGardem = (plant) => {
+    const user = { ...props.user };
+    removeGardemPlant(plant.id);
+    Api.removeGardemPlant(user,plant).then(() => {
+      Api.getUserData(props.user.uid).then(userData => {
+        setUser({ ...userData });
+      });
+    });
+  }
 
   
   return(
@@ -26,9 +48,16 @@ const home = props => {
       <PresentationArea />
       <Search />
       <Filters />
-      <Plants plants={plants}/>
+      <Plants
+        plants={props.plants}
+        user={props.user}
+        addGardemPlant={addToGardem}
+        removeGardemPlant={removeFromGardem}
+        />
     </div>
   )
 };
 
-export default home;
+const mapStateToProps = ({ plants, user }) => ({ plants, user });
+
+export default connect(mapStateToProps)(home);

@@ -7,4 +7,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
+  &.withDisclaimer{
+    padding: 20px;
+  }
+  .disclaimer{
+    padding: 20px 20px 10px 20px;
+    margin: 0 auto;
+    line-height: 26px;
+    font-size: 18px;
+    text-align: center;
+  }
 }

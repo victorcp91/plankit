@@ -1,5 +1,6 @@
 const firebase = require("firebase/app");
 require("firebase/firestore");
+require("firebase/storage");
 
 class Api {
 
@@ -69,6 +70,24 @@ class Api {
     await db.collection("users").doc(user.uid).update({
       gardem: plants
     });
+  }
+
+  createNewPlant = async (image, plant) => {
+    const storage = firebase.storage().ref();
+    let fileName = plant.popularNamePtBr.replace(" ", "_");
+    if(image.type.toLowerCase().includes('png')){
+      fileName = fileName + '.png';
+    } else if(image.type.toLowerCase().includes('jpg')){
+      fileName = fileName + '.jpg';
+    } else if(image.type.toLowerCase().includes('jpeg')){
+      fileName = fileName + '.jpeg';
+    }
+    storage.child(`plants/${fileName}`).put(image).then(snap => {
+      snap.ref.getDownloadURL().then(downloadURL => {
+        const newDownloadURL = downloadURL.split('&token=')[0];
+        console.log("File available at", newDownloadURL);
+      });
+    })
   }
 }
 

@@ -3,6 +3,7 @@ import {useDropzone} from 'react-dropzone';
 
 import filtersList from '../libs/filters.json';
 import css from './NewPlant.module.scss';
+import Api from '../libs/Api';
 
 
 const newPlant = props => {
@@ -10,7 +11,7 @@ const newPlant = props => {
   const [imageFile, setImageFile] = useState(null);
   const [plantInfo, setPlantInfo] = useState({
     popularNamePtBr: '',
-    otherPopularNamesPtBr: ['folha de adao', 'pomo de adao'],
+    otherPopularNamesPtBr: [],
     scientificName: ''
   });
   const [newPopularNamePtBr, setNewPopularNamePtBr] = useState('');
@@ -45,11 +46,12 @@ const newPlant = props => {
 
   const onDrop = acceptedFile => {
     setImageFile(acceptedFile);
+    console.log(acceptedFile);
   };
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
     onDrop,
-    accept: 'image/jpeg, image/png'
+    accept: 'image/jpeg, image/jpg, image/png'
   });
 
   const handleInput = e => {
@@ -72,14 +74,37 @@ const newPlant = props => {
     popularNames = popularNames.filter(name => name !== e.currentTarget.value);
     setPlantInfo(info => ({...info, otherPopularNamesPtBr: popularNames}))
   }
+
+  const comparableString = term => {
+    let preparedString = term.toLowerCase();
+    const before = 'áàãâäéèêëíìîïóòõôöúùûü-';
+    const converted = 'aaaaaeeeeiiiiooooouuuu ';
+    let finalString = '';
+    for(let i=0; i < preparedString.length; i++) {
+      if(before.includes(preparedString[i])){
+        const index = before.indexOf(preparedString[i]);
+        finalString += converted[index];
+      } else {
+        finalString += preparedString[i];
+      }
+    }
+    return finalString;
+  }
   
   const addPopularName = e => {
     let popularNames = plantInfo.otherPopularNamesPtBr;
-    if(newPopularNamePtBr.length > 3 && !popularNames.includes(newPopularNamePtBr)){
+    let comparablePopularNames = [];
+    popularNames.forEach(name => {
+      comparablePopularNames.push(comparableString(name));
+    })
+
+    if(newPopularNamePtBr.length > 3 && 
+      !comparablePopularNames.includes(comparableString(newPopularNamePtBr)) &&
+      (comparableString(plantInfo.popularNamePtBr) !== comparableString(newPopularNamePtBr))) {
       popularNames.push(newPopularNamePtBr);
       setPlantInfo(info => ({...info, otherPopularNamesPtBr: popularNames}));
-      setNewPopularNamePtBr('');
     }
+    setNewPopularNamePtBr('');
   }
   const handleKeyDown = e => {
     if(e.key === 'Enter'){
@@ -118,6 +143,10 @@ const newPlant = props => {
       return false;
   }
 
+  const createNewPlant = () => {
+    Api.createNewPlant(imageFile[0], plantInfo);
+  }
+ 
   return (
     <>
       <section className={css.about}>
@@ -247,6 +276,7 @@ const newPlant = props => {
       <button
         className={`${css.sendButton} ${fieldsVerification() ? css.active : ''} `}
         disabled={!fieldsVerification()}
+        onClick={createNewPlant}
       >
         Cadastrar espécie
       </button>

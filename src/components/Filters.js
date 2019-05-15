@@ -14,10 +14,44 @@ import warningIcon from '../assets/icons/warningIcon.svg';
 import filtersList from '../libs/filters.json';
 
 const filters = props => {
-  const [selectedSession, setSelectedSession] = useState(null);
-  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [selectedSection, setSelectedSection] = useState(null);
   const [leftArrow, setLeftArrow] = useState(false);
   const [rightArrow, setRightArrow] = useState(true);
+
+  const [filters, setFilters] = useState({
+    direct_light: false,
+    half_shadow: false,
+    indirect_light: false,
+    shadow: false,
+    marshy_ground: false,
+    moist_ground: false,
+    dry_ground: false,
+    sprinkler_watering: false,
+    ground_planting: false,
+    aerial_plant: false,
+    water_plant: false,
+    small_size: false,
+    midsize: false,
+    large: false,
+    tree: false,
+    vegetable_leaves: false,
+    vegetable: false,
+    herbs: false,
+    pancs: false,
+    hide_vegetable_garden: false,
+    show_fruitiful: true,
+    only_fruitful: false,
+    hide_fruitful: false,
+    show_floriferous: true,
+    only_floriferous: false,
+    hide_floriferous: false,
+    show_bindweed: true,
+    only_bindweed: false,
+    hide_bindweed: false,
+    thorns: false,
+    poisonous: false,
+    hide_dangerous: false
+  });
 
   const wrapperRef = useRef(null);
 
@@ -28,9 +62,18 @@ const filters = props => {
     };
   }, []);
 
+  useEffect(() => {
+    let filterTimer = setTimeout(()=> {
+      props.setFilters(getActiveFilters());
+    },1500);
+    return () => {
+      clearTimeout(filterTimer)
+    };
+  }, [filters]);
+  
   const handleClickOutside = event => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      setSelectedSession(null);
+      setSelectedSection(null);
     }
   };
 
@@ -47,8 +90,8 @@ const filters = props => {
     }
   };
 
-  const selectSession = value => {
-    setSelectedSession(value);
+  const selectSection = value => {
+    setSelectedSection(value);
   };
 
   const getFilterIcon = (icon) => {
@@ -76,45 +119,148 @@ const filters = props => {
     }
   }
 
+  const changeFilter = e => {
+    const target = e.currentTarget;
+    e.persist();
+
+    const currentValue = filters[target.name];
+    if(target.name === 'hide_vegetable_garden' && !currentValue){
+      setFilters(filters => ({...filters,
+        vegetable_leaves: false,
+        vegetable: false,
+        herbs: false,
+        pancs: false,
+        hide_vegetable_garden: !currentValue
+      }));
+    } else if(target.name === 'vegetable_leaves' ||
+    target.name === 'vegetable' ||
+    target.name === 'herbs' ||
+    target.name === 'pancs'){
+      setFilters(filters => ({...filters,
+        hide_vegetable_garden: false,
+        [target.name]: !currentValue
+      }));
+    } else if(target.name === 'hide_dangerous' && !currentValue){
+      setFilters(filters => ({...filters,
+        thorns: false,
+        poisonous: false,
+        hide_dangerous: !currentValue
+      }));
+    } else if(target.name === 'thorns' || target.name === 'poisonous'){
+      setFilters(filters => ({...filters,
+        hide_dangerous: false,
+        [target.name]: !currentValue
+      }));
+    } else if(target.name === 'fruitful' ||
+      target.name === 'floriferous' ||
+      target.name === 'bindweed') {
+        if(target.value.includes('show')) {
+          setFilters(filters => ({...filters,
+            [`hide_${target.name}`]: false,
+            [`only_${target.name}`]: false,
+            [`show_${target.name}`]: true
+          }));
+        } else if(target.value.includes('only')) {
+          setFilters(filters => ({...filters,
+            [`hide_${target.name}`]: false,
+            [`show_${target.name}`]: false,
+            [`only_${target.name}`]: true
+          }));
+        } else if(target.value.includes('hide')){
+          setFilters(filters => ({...filters,
+            [`only_${target.name}`]: false,
+            [`show_${target.name}`]: false,
+            [`hide_${target.name}`]: true
+          }));
+        }
+    } else{
+      setFilters(filters => ({...filters, [target.name]: !currentValue} ));
+    }
+  }
+
+  const filterSectionActive = section => {
+    const options = filtersList.filter(f => f.title === section)[0].options;
+    if(options){
+      const filters = getActiveFilters();
+      for (let i = 0; i < options.length; i++) {
+        if (filters.includes(options[i].title)) {
+          return true;
+        }
+      }  
+    }
+    return false;
+  }
+  const filterSectionHidden = section => {
+    const options = filtersList.filter(f => f.title === section)[0].options;
+    if(options){
+      const filters = getActiveFilters();
+      for (let i = 0; i < options.length; i++) {
+        if (filters.includes(options[i].title) && options[i].title.includes('hide')) {
+          return true;
+        }
+      }  
+    }
+    return false;
+  }
+
+  const getActiveFilters = () => {
+    const filtersList = Object.keys(filters).filter(key => filters[key] && !key.includes('show'));
+    for(let i = 0; i < filtersList.length; i++){
+      if(filtersList[i].includes('only')){
+        filtersList[i] = filtersList[i].split('only_')[1];
+      }
+    }
+    return filtersList;
+  }
+
   const generateFilters = () => {
-    const session = filtersList.filter(filter => filter.title === selectedSession)[0]
-    if(session) {
-      switch (session.options_type){
+    const section = filtersList.filter(filter => filter.title === selectedSection)[0]
+    if(section) {
+      switch (section.options_type){
         case 'choose':
-          return session.options.map(option => (
+          return section.options.map(option => (
             <div key={option.title} className={css.checkItem}>
               <input
                 type="radio"
-                id={session.title}
-                name={session.title}
-                value={session.title}
+                id={option.title}
+                name={section.title}
+                defaultChecked={filters[option.title]}
+                value={option.title}
                 className={css.radioInput}
+                onChange={changeFilter}
               />
-              <label htmlFor={session.title} className={css.radioStyle}/>
               <label
-                htmlFor={session.title}
+                htmlFor={option.title}
+                className={css.radioStyle}
+              />
+              <label
+                htmlFor={option.title}
                 className={`${css.inputText}
-                ${option.title === '_show' ? css.show : ''}
-                ${option.title === '_hide' ? css.hide: ''}`}
+                ${option.title.includes('hide') ? css.hide: ''}`}
                 >{option.text}</label>
             </div>
           ));
         case 'check':
-          return session.options.map(option => (
+          return section.options.map(option => (
             <div key={option.title} className={css.checkItem}>
               <input
                 type="checkbox"
-                id={session.title}
-                name={session.title}
-                value={session.title}
+                id={option.title}
+                name={option.title}
                 className={css.checkInput}
+                onChange={changeFilter}
+                checked={filters[option.title]}
               />
-              <label htmlFor={session.title} className={css.inputStyle}/>
+               <label
+                htmlFor={option.title}
+                className={css.inputStyle}
+                name={option.title}
+                value={filters[option.title]}
+              />
               <label
-                htmlFor={session.title}
+                htmlFor={section.title}
                 className={`${css.inputText}
-                ${option.title === '_show' ? css.show : ''}
-                ${option.title === '_hide' ? css.hide : ''}`}
+                ${option.title.includes('hide') ? css.hide : ''}`}
                 >{option.text}</label>
             </div>
           ));
@@ -134,10 +280,13 @@ const filters = props => {
           <button
             key={filter.title}
             className={`${css.selector}
-              ${selectedSession === filter.title ? css.selected : ''}
+              ${selectedSection === filter.title ? css.selected : ''}
               ${filtersList.length -1 === index ?  css.last : ''}`}
-            onClick={() => selectSession(filter.title)}
+            onClick={() => selectSection(filter.title)}
             >
+            <span
+              className={`${filterSectionActive(filter.title) ? css.active : ''}
+              ${filterSectionHidden(filter.title) ? css.hidden : ''}`}/>
             <span className={css.iconContainer}>
               <img className={css.icon} src={getFilterIcon(filter.icon)} alt={filter.title}/>
             </span>
@@ -146,7 +295,7 @@ const filters = props => {
         ))}
         {rightArrow && <span className={css.next} />}
       </div>
-      <div className={`${css.iconFields} ${selectedSession ? css.active : ''}`}>
+      <div className={`${css.iconFields} ${selectedSection ? css.active : ''}`}>
         {generateFilters()}
       </div>
     </div>

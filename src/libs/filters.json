@@ -2,7 +2,7 @@
   {
     "label": "Luz",
     "title": "light",
-    "icon": "sunIcon",
+    "icon": "sunIcon", 
     "options": [
       {"title": "direct_light", "text": "Luz intensa e direta(mínimo de 6h de luz ao dia)"
       },
@@ -66,15 +66,15 @@
     "title": "vegetable_garden",
     "icon": "carrotIcon",
     "options": [
-      {"title": "vegetable_leaves", "text": "Verduras"
+      {"title": "vegetable_leaves", "text": "Verdura"
       },
-      {"title": "vegetable", "text": "Legumes"
+      {"title": "vegetable", "text": "Legume"
       },
-      {"title": "herbs", "text": "Ervas"
+      {"title": "herbs", "text": "Erva"
       },
-      {"title": "pancs", "text": "Plantas alimentícias não convencionais"
+      {"title": "pancs", "text": "Planta alimentícia não convencional"
       },
-      {"title": "_hide", "text": "Não exibir plantas de horta"
+      {"title": "hide_vegetable_garden", "text": "Não exibir plantas de horta"
       }
     ],
     "options_type": "check"
@@ -84,9 +84,11 @@
     "title": "fruitful",
     "icon": "orangeIcon",
     "options": [
-      {"title": "_show", "text": "Exibir"
+      {"title": "show_fruitful", "text": "Incluir frutíferas"
       },
-      {"title": "_hide", "text": "Não exibir"
+      {"title": "only_fruitful", "text": "Somente frutíferas"
+      },
+      {"title": "hide_fruitful", "text": "Não exibir"
       }
     ],
     "options_type": "choose"
@@ -96,9 +98,11 @@
     "title": "floriferous",
     "icon": "flowerIcon",
     "options": [
-      {"title": "_show", "text": "Exibir"
+      {"title": "show_floriferous", "text": "Incluir floríferas"
       },
-      {"title": "_hide", "text": "Não exibir"
+      {"title": "only_floriferous", "text": "Somente floríferas"
+      },
+      {"title": "hide_floriferous", "text": "Não exibir"
       }
     ],
     "options_type": "choose"
@@ -108,9 +112,10 @@
     "title": "bindweed",
     "icon": "wheatIcon",
     "options": [
-      {"title": "_show", "text": "Exibir"
+      {"title": "show_bindweed", "text": "Incluir trepadeiras"
       },
-      {"title": "_hide", "text": "Não exibir"
+      {"title": "only_bindweed", "text": "Somente trepadeiras"},
+      {"title": "hide_bindweed", "text": "Não exibir"
       }
     ],
     "options_type": "choose"
@@ -124,7 +129,7 @@
       },
       {"title": "poisonous", "text": "Venenosa"
       },
-      {"title": "_hide", "text": "Não exibir plantas perigosas"
+      {"title": "hide_dangerous", "text": "Não exibir plantas perigosas"
       }
     ],
     "options_type": "check"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import firebase from "firebase/app";
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Api from '../libs/Api';
@@ -8,29 +8,18 @@ import { setUser, removeGardemPlant } from '../store/user';
 import css from './MyArea.module.scss';
 import Plants from '../components/Plants';
 import NewPlant from '../components/NewPlant';
-import optionsIcon from '../assets/icons/optionsIcon.svg';
+import SellerForm from '../components/SellerForm';
+// import optionsIcon from '../assets/icons/optionsIcon.svg';
 import houseIcon from '../assets/icons/houseIcon.svg';
-import heartIcon from '../assets/icons/heartIcon.svg';
+// import heartIcon from '../assets/icons/heartIcon.svg';
 import myWishesIcon from '../assets/icons/myWishesIcon.svg';
 import newPlantIcon from '../assets/icons/newPlantIcon.svg';
 
 
 
 const myArea = props => {
-  const [currentSection, setCurrentSection] = useState('myGarden');
+  const [currentSection, setCurrentSection] = useState('newPlant');
   const [iconAnimation, setIconAnimation] = useState(false);
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        Api.getUserData(user.uid).then(userData => {
-          setUser({ ...userData });
-        })
-      } else {
-        setUser(null);
-      }
-    });
-  }, []);
 
   useEffect(() => {
     setIconAnimation(false);
@@ -43,14 +32,17 @@ const myArea = props => {
   const setMyGardenSection = () => {
     setCurrentSection('myGarden');
   }
-  const setMyWishesSection = () => {
-    setCurrentSection('myWishes');
-  }
+  // const setMyWishesSection = () => {
+  //   setCurrentSection('myWishes');
+  // }
   const setNewPlantSection = () => {
     setCurrentSection('newPlant');
   }
   const setMyStoreSection = () => {
     setCurrentSection('myStore');
+  }
+  const setMyChannelSection = () => {
+    setCurrentSection('myChannel');
   }
 
   const loadSectionIcon = () => {
@@ -62,6 +54,8 @@ const myArea = props => {
       case 'newPlant': 
         return newPlantIcon;
       case 'myStore': 
+        return houseIcon;
+      case 'myChannel': 
         return houseIcon;
       default:
         return null
@@ -102,12 +96,12 @@ const myArea = props => {
               <span className={css.label}>Meu Jardim</span>
             </button>
           </li>
-          <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'myWishes' ? css.active : ''}`}>
+          {/* <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'myWishes' ? css.active : ''}`}>
             <button onClick={setMyWishesSection}>
               <img className={css.icon} src={myWishesIcon} alt="Meus Desejos" />
               <span className={css.label}>Meus Desejos</span>
             </button>
-          </li>
+          </li> */}
           <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'newPlant' ? css.active : ''}`}>
             <button onClick={setNewPlantSection}>
               <img className={css.icon} src={newPlantIcon} alt="Cadastrar Nova Espécie" />
@@ -117,7 +111,13 @@ const myArea = props => {
           <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'myStore' ? css.active : ''}`}>
             <button onClick={setMyStoreSection}>
               <img className={css.icon} src={houseIcon} alt="Meu Jardim" />
-              <span className={css.label}>Minha Loja</span>
+              <span className={css.label}>Cadastrar Loja</span>
+            </button>
+          </li>
+          <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'myChannel' ? css.active : ''}`}>
+            <button onClick={setMyChannelSection}>
+              <img className={css.icon} src={houseIcon} alt="Meu Canal" />
+              <span className={css.label}>Meu Canal</span>
             </button>
           </li>
         </ul>
@@ -127,9 +127,11 @@ const myArea = props => {
           <h1 className={css.welcome}>{props.user.display_name ?`Bom dia, ${props.user.display_name.split(' ')[0]}!`: 'Bom dia!'}</h1>
         </div>
         {currentSection === 'myGarden' && myGardem()}
-        {currentSection === 'myWishes' && <div>My Wishes</div>}
+        {/* {currentSection === 'myWishes' && <div>My Wishes</div>} */}
         {currentSection === 'newPlant' && <NewPlant/>}
-        {currentSection === 'myStore' && <div>My Store</div>}
+        {currentSection === 'myStore' &&  <SellerForm user={props.user}/>}
+        {currentSection === 'myChannel' &&  <h1>Canal</h1>}
+
       </main>
     </div>
   )

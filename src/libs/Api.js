@@ -14,6 +14,18 @@ class Api {
     return plants;
   }
 
+  getFilteredPlants = async (filter) => {
+    const db = firebase.firestore();
+    let plants = []
+
+    await db.collection("plants").where('tags','array-contains',filter).get().then((snapshot) => {
+      plants = snapshot.docs.map(plant => {
+        return {id: plant.id, ...plant.data()}
+      });
+    });
+    return plants;
+  }
+
   getUserData = async (userId) => {
     const db = firebase.firestore();
     let userData = null;

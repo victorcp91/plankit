@@ -3,7 +3,7 @@
 .container{
   margin: 20px auto;
   @media only screen and (min-width: 875px) { 
-    margin: 50px auto;
+    margin: 50px auto 0 auto;
   }
   width: 100%;
   max-width: 80%;
@@ -11,14 +11,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   .searchInput, .selectInput{
-    box-sizing: border-box;
-    box-shadow: inset 1px 1px 5px $lightShadow;
-    background-color: $lightGray;
-    border: none;
-    padding: 10px;
+    @extend .inputStyle;
     margin-bottom: 20px;
-    font-size: 14px;
-
   }
   .searchInputContainer{
     width: 50%;
@@ -38,7 +32,7 @@
   }
   .selectInput{
     width: 20%;
-    min-width: 135px;
+    min-width: 235px;
     text-align: center;
     text-indent: 10px;
     color: rgba(0,0,0,.5);

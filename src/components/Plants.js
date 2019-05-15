@@ -52,7 +52,7 @@ const plants = React.memo(props => {
 
 
   return(
-    props.plants && props.plants.length ? 
+    props.plants && props.plants.length || props.loading ? 
     <>
     <div className={css.plantsContainer}>
       {selectedPlant && getSelectedPlant() ?
@@ -72,7 +72,10 @@ const plants = React.memo(props => {
             <div className={css.actionsContainer}>
               <div className={css.labelArea}>
                 <button 
-                  className={`${css.actionButton} ${css.garden} ${insideMyGardem(plant.id) ? css.active : ''}`}
+                  className={`${css.actionButton}
+                  ${css.garden}
+                  ${insideMyGardem(plant.id) ? css.active : ''}
+                  ${props.myArea ? css.small :'' }`}
                   onClick={() => setMyGarden(plant)}
                 >
                   <img className={css.icon} src={houseIcon} alt="Meu Jardim"/>
@@ -82,17 +85,17 @@ const plants = React.memo(props => {
                 </label>
               </div>
 
-              <div className={css.labelArea}>
+              {/* <div className={css.labelArea}>
                 <button className={`${css.actionButton} ${css.location}`}>
                   <img className={css.icon} src={pinIcon} alt="Onde encontrar"/>
                 </button>
                 <label className={css.label}>
                 Onde<br/>Encontrar
                 </label>
-              </div>
+              </div> */}
               <div className={`${css.labelArea} ${css.infoButton}`}>
                 <button
-                  className={`${css.actionButton} ${css.info}`}
+                  className={`${css.actionButton} ${css.info} ${props.myArea ? css.small :'' }`}
                   onClick={() => selectPlant(plant.id)}>
                   <img className={css.icon} src={clipboardIcon} alt="Informações"/>
                 </button>
@@ -112,7 +115,8 @@ const plants = React.memo(props => {
           close={toogleLoginModal}
           disclaimer={loginDisclaimer}/>
       </> : null}
-    </>: <h1>LOADING</h1>
+      {props.loading ? <h1>LOADING</h1> : null}
+    </>: <h1>Ops! Nenhuma planta foi encontrada. :(</h1>
   );
 });
 

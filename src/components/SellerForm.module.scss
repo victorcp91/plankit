@@ -1,0 +1,108 @@
+@import '../libs/variables.scss';
+
+.sellerForm{
+  font-family: 'Helvetica Light';
+  margin-bottom: 50px;
+  .sectionTitle{
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0 0 5px 0;
+  }
+  .sectionSubTitle{ 
+    line-height: 20px;
+    font-size: 16px;
+    width: 100%;
+    color: $darkGray;
+  }
+  hr{
+    margin: 20px 0;
+    border: 2px solid $lightGray;
+    border-bottom: 0;
+  }
+  .labelField,.field{
+    display: block;
+    box-sizing: border-box;
+  }
+  .labelField{
+    margin: 25px 0 5px 0;
+    color: $darkGray;
+  }
+  .field{
+    @extend .inputStyle;
+    width: 100%;
+    height: 30px;
+  }
+  .sellerContainer{
+    justify-content: flex-end;
+  }
+  .addressContainer{
+    justify-content: space-between;
+  }
+  .sellerContainer,.addressContainer{
+    display: flex;
+    flex-direction: row;
+    flex-flow: row-reverse;
+    flex: 1;
+    .map{
+      height: 200px;
+      flex: 1;
+    }
+    .sellerFields, .addressFields{
+      flex: 1;
+      max-width: 45%;
+      flex-direction: row;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .addressFields{
+      opacity: 0;
+      transition: opacity .5s ease-in-out;
+      &.active{
+        opacity: 1;
+      }
+      .streetContainer{
+        display: block;
+        width: 100%;
+        max-width: calc(100% - 80px);
+      }
+      .numberContainer{
+        display: block;
+        width: 100%;  
+        max-width: 60px;
+      } 
+      .street,.number{
+        width: 100%;
+      }
+    }
+  }
+  .workingTime{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    .time{
+      width: 60px;
+    }
+    .separator{
+      margin: 0 10px;
+    }
+  }
+  
+  .sendButton{
+    display: block;
+    width: fit-content;
+    padding: 10px 20px;
+    margin: 0 auto;
+    background-color: $lightGray;
+    &.active{
+      background-color: $lightGreen;
+      cursor: pointer;
+      &:hover{
+        background-color: $green;
+      }
+    }
+  }
+  
+}
+

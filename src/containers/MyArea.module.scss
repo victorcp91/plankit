@@ -34,7 +34,7 @@
         display: block;
         height: 100px;
         width: 100%;
-        margin: 40px 0;
+        margin: 25px 0;
         box-sizing: border-box;
         &.animate{
           animation: animate-pulse 1000ms;
@@ -121,8 +121,8 @@
     box-sizing: border-box;
     overflow-y: scroll;
     @media only screen and (min-width: 600px) { 
-      height: calc(100vh - 180px);
-      margin-top: 180px;
+      height: calc(100vh - 150px);
+      margin-top: 150px;
       width: calc(100% - 200px);
       padding:0 0 80px 20px;
       box-sizing: border-box;
@@ -133,7 +133,7 @@
       position: absolute;
       top: 40px;
       @media only screen and (min-width: 600px) { 
-        top: 160px;
+        top: 115px;
         padding: 0 10px;
       }
       .welcome{

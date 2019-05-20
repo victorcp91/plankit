@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import firebase from "firebase/app";
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { deleteUser } from '../store/user';
+
+
 import Api from '../libs/Api';
-import { setUser, deleteUser } from '../store/user';
 
 import css from './Header.module.scss';
 import logoIcon from '../assets/icons/plankitIcon.svg';
@@ -21,15 +23,6 @@ const header = props => {
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, false);
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        Api.getUserData(user.uid).then(userData => {
-          setUser({ ...userData });
-        })
-      } else {
-        deleteUser();
-      }
-    });
     return () => {
       document.removeEventListener("click", handleClickOutside, false);
     }

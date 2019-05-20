@@ -1,0 +1,69 @@
+@import '../libs/variables.scss';
+
+.dragAndDropArea{
+  @extend .inputStyle;
+  display: block;
+  margin: 0 10px 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.imagePreview{
+  position: relative;
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 10px 20px 0;
+  overflow: hidden;
+}
+.cover{
+  height: 200px;
+  width: 100%;
+}
+.profile{
+  height: 200px;
+  width: 200px;
+}
+.post{
+  position: relative;
+  width: 100%;
+  padding-top:56.25%;
+  box-sizing: border-box;
+  .placeholder{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.delete{
+  @extend .inputStyle;  
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: none;
+  color: $red;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background-color: $lightGray;
+  border-radius: 50%;
+  cursor: pointer;
+  &:before, &:after{
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 2px;
+    height: 15px;
+    background-color: $red;
+  }
+  &:before{
+    transform: rotate(45deg);
+  }
+  &:after{
+    transform: rotate(-45deg);
+  }
+}

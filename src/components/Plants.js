@@ -63,11 +63,11 @@ const plants = React.memo(props => {
           close={closeInfoModal}/>
         </>: null }
       {props.plants.map(plant => (
-        <div key={plant.popular_name_pt_br} className={`${css.plantCard} ${props.myArea ? css.small :'' }`}>
+        <div key={plant.id} className={`${css.plantCard} ${props.myArea ? css.small :'' }`}>
           <div className={css.imageContainer} style={{backgroundImage: `url(${plant.image})`}} />
           <span className={css.mobileContainer}>
             <div className={css.infoContainer}>
-              <h3 className={css.plantTitle}>{plant.popular_name_pt_br}</h3>
+              <h3 className={css.plantTitle}>{plant.popularNamePtBr}</h3>
             </div>
             <div className={css.actionsContainer}>
               <div className={css.labelArea}>
@@ -116,7 +116,7 @@ const plants = React.memo(props => {
           disclaimer={loginDisclaimer}/>
       </> : null}
       {props.loading ? <h1>LOADING</h1> : null}
-    </>: <h1>Ops! Nenhuma planta foi encontrada. :(</h1>
+    </>: <h1>{props.myArea ? 'Você ainda não adicionou nenhuma planta no seu jardim': 'Ops! Nenhuma planta foi encontrada. :('}</h1>
   );
 });
 

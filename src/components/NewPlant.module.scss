@@ -5,7 +5,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  // color:$gray;
   font-size: 14px;
   font-family: 'Helvetica Light';
   .dragAndDropArea{
@@ -121,12 +120,20 @@
     }
   }
 }
+.requiredDisclaimer{
+  padding: 0;
+  margin: 0 10px 30px 10px;
+  font-size: 14px;
+  color: green;
+
+}
 .filterTags{
   font-family: 'Helvetica Light';
   font-size: 14px;
   margin: 0 10px;
   .filterSectionTitle{
     color: $green;
+    font-family: 'Helvetica';
   }
   .filterSectionSeparator{
     margin: 30px 0;
@@ -168,6 +175,7 @@
   } 
 }
 .aboutText{
+  padding: 0 10px;
   .aboutTextField{
     @extend .inputStyle;
     width: 100%;
@@ -176,7 +184,6 @@
     box-sizing: border-box;
     outline: none;
     white-space: pre-line;
-    margin: 0 10px;
   }
 }
 

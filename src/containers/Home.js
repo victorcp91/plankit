@@ -55,8 +55,7 @@ const home = props => {
       const hide = filters.filter(f => f.includes('hide'));
       setHideFilters(hide);
       setFindFilters(find);
-      let filterQuery = find.sort().join('_');
-      Api.getFilteredPlants(filterQuery).then(res => {
+      Api.getFilteredPlants(find).then(res => {
         setPlants(res);
         setLoadingPlants(false);
       })

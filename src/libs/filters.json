@@ -3,6 +3,7 @@
     "label": "Luz",
     "title": "light",
     "icon": "sunIcon", 
+    "required": true,
     "options": [
       {"title": "direct_light", "text": "Luz intensa e direta(mínimo de 6h de luz ao dia)"
       },
@@ -19,6 +20,7 @@
     "label": "Rega",
     "title": "watering",
     "icon": "wateringCanIcon",
+    "required": true,
     "options": [
       {"title": "marshy_ground", "text": "Solo pantanoso(manter solo encharcado)"
       },
@@ -35,6 +37,7 @@
     "label": "Plantio",
     "title": "planting",
     "icon": "shovelIcon",
+    "required": true,
     "options": [
       {"title": "ground_planting", "text": "Terra"
       },
@@ -49,6 +52,7 @@
     "label": "Tamanho",
     "title": "size",
     "icon": "treeIcon",
+    "required": true,
     "options": [
       {"title": "small_size", "text": "Pequeno porte"
       },
@@ -65,6 +69,7 @@
     "label": "Horta",
     "title": "vegetable_garden",
     "icon": "carrotIcon",
+    "required": false,
     "options": [
       {"title": "vegetable_leaves", "text": "Verdura"
       },
@@ -83,6 +88,7 @@
     "label": "Frutífera",
     "title": "fruitful",
     "icon": "orangeIcon",
+    "required": false,
     "options": [
       {"title": "show_fruitful", "text": "Incluir frutíferas"
       },
@@ -97,6 +103,7 @@
     "label": "Florífera",
     "title": "floriferous",
     "icon": "flowerIcon",
+    "required": false,
     "options": [
       {"title": "show_floriferous", "text": "Incluir floríferas"
       },
@@ -111,6 +118,7 @@
     "label": "Trepadeira",
     "title": "bindweed",
     "icon": "wheatIcon",
+    "required": false,
     "options": [
       {"title": "show_bindweed", "text": "Incluir trepadeiras"
       },
@@ -124,6 +132,7 @@
     "label": "Perigosa",
     "title": "dangerous",
     "icon": "warningIcon",
+    "required": false,
     "options": [
       {"title": "thorns", "text": "Espinhos"
       },

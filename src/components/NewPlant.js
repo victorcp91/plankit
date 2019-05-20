@@ -46,7 +46,6 @@ const newPlant = props => {
 
   const onDrop = acceptedFile => {
     setImageFile(acceptedFile);
-    console.log(acceptedFile);
   };
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
@@ -144,7 +143,20 @@ const newPlant = props => {
   }
 
   const createNewPlant = () => {
-    Api.createNewPlant(imageFile[0], plantInfo);
+
+    let orderedFilters = Object.keys(filters).filter(key => filters[key]).sort();
+    const plant = {
+      createdBy: props.user.uid,
+      ...plantInfo,
+      tags: orderedFilters,
+      about: [{
+        uid: props.user.uid,
+        aboutPtBr: aboutText,
+        usersWhoLiked: []
+      }
+    ]}
+
+    Api.createNewPlant(imageFile[0], plant);
   }
  
   return (
@@ -166,15 +178,15 @@ const newPlant = props => {
         <div className={css.namingContainer}>
           <input
             className={css.field}
-            placeholder="Nome popular principal"
+            placeholder="Nome popular principal*"
             type="text"
             name="popularNamePtBr"
             value={plantInfo['popularNamePtBr']}
-            onChange={e => handleInput(e)} 
+            onChange={handleInput} 
           />
           <input
             className={css.field}
-            placeholder="Nome científico"
+            placeholder="Nome científico*"
             type="text"
             name="scientificName"
             value={plantInfo['scientificName']}
@@ -205,6 +217,7 @@ const newPlant = props => {
           </div>
         </div>
       </section>
+      <p className={css.requiredDisclaimer} >Os itens marcados com * são obrigatórios para cadastrar uma nova espécie</p>
       <section className={css.filterTags}>
         {filtersList.map(filter => {
           switch (filter.options_type){
@@ -236,7 +249,7 @@ const newPlant = props => {
             case 'check':
               return (
                 <div key={filter.title}>
-                  <div className={css.filterSectionTitle}>{filter.label}</div>
+                  <div className={css.filterSectionTitle}>{filter.label}{filter.required ? '*': ''}</div>
                   {filter.options.map(option => (
                   !option.title.includes('hide') && <div key={option.title} className={css.checkItem}>
                     <input

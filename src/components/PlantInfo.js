@@ -68,10 +68,10 @@ const plantInfo = props => {
         />
       <div className={css.imageContainer} style={{backgroundImage: `url(${plant.image})`}} />
       <div className={css.infoContainer}>
-        <h3 className={css.plantTitle}>{plant.popular_name_pt_br}</h3>
-        <div className={css.plantPrice}>
-          R$ <span className={css.green}>{plant.price.maximum_brl}</span>
-        </div>
+        <h3 className={css.plantTitle}>{plant.popularNamePtBr}</h3>
+        {/* <div className={css.plantPrice}>
+          R$ <span className={css.green}>{plant.price.maximumBrl}</span>
+        </div> */}
         <div className={css.actionsContainer}>
           <div className={css.buttonArea}>
             <button 
@@ -98,12 +98,12 @@ const plantInfo = props => {
         <div className={css.filterInfo}>
           {plant.scientificName ?
             <span className={css.filterItem}>
-              <span className={css.filterLabel}>Nome Científico: </span>{plant.scientific_name}
+              <span className={css.filterLabel}>Nome Científico: </span>{plant.scientificName}
             </span>: null}
           {getFiltersInfo()}  
         </div>
         <div className={css.moreInfo}>
-          {plant['info_text_pt-br']}
+          {plant.about && plant.about[0].aboutPtBr ? plant.about[0].aboutPtBr : ''}
         </div>
       </div>
     </div>

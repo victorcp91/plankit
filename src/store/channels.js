@@ -17,6 +17,15 @@ export function setChannels(channels) {
   getStore().dispatch({ type: SET_CHANNELS, currentChannels });
 }
 
+export function setChannelPosts(channelId, posts) {
+  const currentChannels = getStore().getState().channels;
+  const channelIndex = currentChannels.findIndex(channel => channel.id === channelId);
+  if(channelIndex > -1){
+    currentChannels[channelIndex].posts = posts;
+    getStore().dispatch({ type: SET_CHANNELS, currentChannels });
+  }
+}
+
 export default function reducer(state = [], action) {
   switch (action.type) {
     case SET_CHANNELS: {

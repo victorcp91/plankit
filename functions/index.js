@@ -37,6 +37,61 @@ exports.filteredPlants = functions.https.onRequest((request, response) => {
     });
 });
 
+exports.searchPlants = functions.https.onRequest((request, response) => {
+
+  cors(request, response, () => {});
+  if(request.method !== "POST"){
+    response.status(400).send('Please send a POST request');
+    return;
+  }
+
+  const keywordsConverter = (keywords) => {
+    let preparedString = keywords.toLowerCase();
+    const before = 'áàãâäéèêëíìîïóòõôöúùûü-';
+    const converted = 'aaaaaeeeeiiiiooooouuuu ';
+    let finalString = '';
+    for(let i=0; i < preparedString.length; i++) {
+      if(before.includes(preparedString[i])){
+        const index = before.indexOf(preparedString[i]);
+        finalString += converted[index];
+      } else {
+        finalString += preparedString[i];
+      }
+    }
+    return finalString;
+  }
+
+  const otherNames = (names, key) => {
+    let contains = false;
+    names.forEach(name => {
+      if(keywordsConverter(name).includes(key)){
+        contains = true;
+      }
+    });
+    return contains;
+  }
+
+  let keywords = request.body.keywords;
+
+  const finalKeywords = keywordsConverter(keywords).split(' ');
+  
+  return firestore.collection("plants")
+    .get()
+    .then(snapshot => {
+      let plants = snapshot.docs.map(plant => {
+        return {id: plant.id, ...plant.data()}
+      });
+      
+      finalKeywords.forEach(key => {
+        plants = plants.filter(plant => (keywordsConverter(plant.popularNamePtBr).includes(key) ||
+        keywordsConverter(plant.scientificName).includes(key) || otherNames(plant.otherPopularNamesPtBr, key)));
+      });
+      return response.status(200).send(plants);
+    }).catch(err => {
+      return response.status(404).send({ error: 'Unable to retrieve the document', err });
+    });
+});
+
 exports.resizeImage = functions.storage.object().onFinalize(object => {
   const bucket = object.bucket;
   const contentType = object.contentType;
@@ -48,7 +103,8 @@ exports.resizeImage = functions.storage.object().onFinalize(object => {
 
   if(path.basename(fileName).startsWith('thumb_') ||
     path.basename(fileName).startsWith('cover_') ||
-    path.basename(fileName).startsWith('profile_')){
+    path.basename(fileName).startsWith('profile_') ||
+    path.basename(fileName).startsWith('post_')){
     return;
   }
 
@@ -62,11 +118,11 @@ exports.resizeImage = functions.storage.object().onFinalize(object => {
     thumbFilePath = path.join(path.dirname(fileName), `cover_${path.basename(fileName)}`);
   } else if(path.dirname(fileName).includes('profiles')){
     thumbFilePath = path.join(path.dirname(fileName), `profile_${path.basename(fileName)}`);
+  } else if(path.dirname(fileName).includes('posts')){
+    thumbFilePath = path.join(path.dirname(fileName), `post_${path.basename(fileName)}`);
   }
   
   const metadata = { contentType: contentType };
-
-
 
   return destBucket.file(fileName).download({
     destination: tmpFilePath
@@ -78,6 +134,8 @@ exports.resizeImage = functions.storage.object().onFinalize(object => {
         return spawn('convert', [tmpFilePath, '-resize', '1024x1024', '-alpha', 'Remove', tmpFilePath]);
       } else if(path.dirname(fileName).includes('profiles')){
         return spawn('convert', [tmpFilePath, '-resize', '450x450', '-alpha', 'Remove', tmpFilePath]);
+      } else if(path.dirname(fileName).includes('posts')){
+        return spawn('convert', [tmpFilePath, '-resize', '1024x546', '-alpha', 'Remove', tmpFilePath]);
       }
     }
     if(path.basename(fileName).endsWith('.jpg') || path.basename(fileName).endsWith('.jpeg')) {
@@ -87,6 +145,8 @@ exports.resizeImage = functions.storage.object().onFinalize(object => {
         return spawn('convert', [tmpFilePath, '-resize', '1024x1024', '-interlace', 'JPEG', '-quality', '85', '-strip', tmpFilePath]);
       } else if(path.dirname(fileName).includes('profiles')){
         return spawn('convert', [tmpFilePath, '-resize', '450x450', '-interlace', 'JPEG','-quality', '85','-strip', tmpFilePath]);
+      } else if(path.dirname(fileName).includes('posts')){
+        return spawn('convert', [tmpFilePath, '-resize', '1024x546', '-interlace', 'JPEG','-quality', '85','-strip', tmpFilePath]);
       }
     }
     return;

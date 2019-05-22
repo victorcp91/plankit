@@ -9,24 +9,25 @@ const search = props => {
 
   useEffect(() => {
     let searchTermTimer = setTimeout(()=> {
-      props.searchTerm(searchTerm.toLowerCase());
+      props.searchTerm(searchTerm.toLocaleLowerCase());
     },1500);
     return () => {
       clearTimeout(searchTerm)
     };
   }, [searchTerm]);
+  
 
   const handleSearchTerm = e => {
     setSearchTerm(e.currentTarget.value);
   }
 
   const handleSort = e => {
-    console.log(e.currentTarget.value);
+    
   }
 
 
   return(
-  <div className={css.container}>
+  <div className={`${css.container} ${props.hideSort && css.onlySearch}`}>
     <div className={css.searchInputContainer}>
       <img className={css.searchIcon} src={searchIcon} alt="search icon"/>
       <input
@@ -37,6 +38,7 @@ const search = props => {
         onChange={handleSearchTerm} 
         />
     </div>
+    {props.hideSort ? null :
     <select
       className={css.selectInput}
       name="ordenar"
@@ -48,7 +50,7 @@ const search = props => {
       <option value="ascending">Ordem Alfabética Crescente</option>
       <option value="descending">Ordem Alfabética Decrescente</option>
       <option value="byDate">Mais Recente</option>
-    </select>
+    </select>}
   </div>
   );
   }

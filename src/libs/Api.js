@@ -28,6 +28,18 @@ class Api {
     });
   }
 
+  getSearchedPlants = async (keywords) => {
+    let data = {
+      keywords: keywords
+    };
+    return axios.post('/searchPlants', data, { headers: { 'Content-Type': 'application/json' } })
+      .then(res => {
+        return res.data;
+    }).catch(err => {
+        return [];
+    });
+  }
+
   getUserData = async (userId) => {
     const db = firebase.firestore();
     let userData = null;
@@ -56,7 +68,10 @@ class Api {
     const newPlant = {
       id: plant.id,
       image: plant.image,
-      popular_name_pt_br: plant.popular_name_pt_br
+      popularNamePtBr: plant.popularNamePtBr,
+      otherPopularNamesPtBr: plant.otherPopularNamesPtBr,
+      scientificName: plant.scientificName,
+      tags: plant.tags
     }
     const db = firebase.firestore();
     await db.collection("users").doc(user.uid).update({
@@ -257,6 +272,52 @@ class Api {
     return channels;
   }
 
+  createPost = async (post, image) => {
+    if(image) {
+      const storage = firebase.storage().ref();
+      let fileName = comparableString(post.title);
+      fileName = fileName.replace(/ /g, "_");
+
+      if(image.type.toLowerCase().includes('png')){
+        fileName = fileName + '.png';
+      } else if(image.type.toLowerCase().includes('jpg')){
+        fileName = fileName + '.jpg';
+      } else if(image.type.toLowerCase().includes('jpeg')){
+        fileName = fileName + '.jpeg';
+      }
+      storage.child(`posts/${fileName}`).put(image).then(snap => {
+        snap.ref.getDownloadURL().then(downloadURL => {
+          let newDownloadURL = downloadURL.split('&token=')[0];
+          const splitedDownloadUrl = newDownloadURL.split(fileName);
+          newDownloadURL = splitedDownloadUrl[0] + 'post_' + fileName + splitedDownloadUrl[1];
+          const db = firebase.firestore();
+          db.collection("posts").doc().set({
+            ...post,
+            image: newDownloadURL
+          }).then(() => {
+            return 'success';
+          }).catch(err => console.log(err));
+        });
+      });
+    } else {
+      const db = firebase.firestore();
+      db.collection("posts").doc().set({
+        ...post
+      }).then(() => {
+        return 'success';
+      }).catch(err => console.log(err));
+    }
+  }
+  getChannelPosts = async (channelId) => {
+    const db = firebase.firestore();
+    let posts = [];
+    await db.collection("posts").where("channel", "==", channelId).get().then(snapshot => {
+      posts = snapshot.docs.map(post => {
+        return {id: post.id, ...post.data()}
+      });
+    });
+    return posts;
+  }
 }
 
 export default new Api();

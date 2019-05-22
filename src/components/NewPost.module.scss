@@ -1,0 +1,137 @@
+@import '../libs/variables.scss';
+
+.newPostContainer{
+  label{
+    display: block;
+    margin: 25px 0 5px 0;
+    font-family: 'Helvetica Light';
+    font-size: 14px;
+  }
+  .field{
+    &.title{
+      font-size: 24px;
+    }
+    @extend .inputStyle;
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  .youtubeInput{
+    position: relative;
+    display: block;
+    .loadVideoButton{
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: $green;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+  .videoContainer{
+    position: relative;
+    width: 100%;
+    padding-top:56.25%;
+    box-sizing: border-box;
+    iframe{
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+  .postContentToolbar{
+    background-color: transparent;
+    border: none;
+  }
+  .postContentField{
+    @extend .inputStyle;
+    justify-content: center;
+    min-height: 500px;
+    border: none;
+  }
+  .plantsContainer{
+    position: relative;
+    min-height: 200px;
+    width: 100%;
+    border: 1px solid $lightGray;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .plant{
+      display: flex;
+      width: 100%;
+      max-width: 49%;
+      height: fit-content;
+      padding: 15px;
+      background-color: $lightGray;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+      .image{
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        max-width: 150px;
+        max-height: 150px;
+        width: 40vw;
+        height: 40vw;
+      }
+      .infoContainer{
+        padding-left: 15px;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: space-between;
+        .mainName{
+          font-weight: bold;
+        }
+        .scientificName{
+          font-family: 'Helvetica Light';
+        }
+        .button{
+          background-color: $white;
+          font-weight: bold;
+          border: none;
+          color: $green;
+          padding: 10px 0; 
+          cursor: pointer;
+        }
+      }
+    }
+    &.added{
+      @extend .inputStyle;
+      .plant{
+        background-color: $white;
+        .button{
+          background-color: $lightGray;
+          font-weight: bold;
+          border: none;
+          color: $red;
+          padding: 10px 0; 
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  
+  .sendButton{
+    display: block;
+    width: fit-content;
+    padding: 10px 20px;
+    margin: 20px auto;
+    background-color: $lightGray;
+    border: none;
+    font-size: 14px;
+    &.active{
+      background-color: $lightGreen;
+      cursor: pointer;
+      &:hover{
+        background-color: $green;
+      }
+    }
+  }
+}

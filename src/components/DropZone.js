@@ -20,7 +20,9 @@ const dropZone = props => {
   });
 
   const getImageURL = () => {
-    if(currentImageURL){
+    if(props.type === 'post' && props.imageUrl){
+      return props.imageUrl;
+    }else if(currentImageURL){
       return currentImageURL;
     } else if(props.imageFile){
       return URL.createObjectURL(props.imageFile);

@@ -24,7 +24,7 @@ const plants = React.memo(props => {
   }
 
   const setMyGarden = (plant) => {
-    if(!props.user){
+    if(!props.user || !props.user.gardem){
       setLoginDisclaimer('Para organizar suas plantas do seu jeitinho é necessário fazer login ; )')
       toogleLoginModal();
     } else {
@@ -68,6 +68,8 @@ const plants = React.memo(props => {
           <span className={css.mobileContainer}>
             <div className={css.infoContainer}>
               <h3 className={css.plantTitle}>{plant.popularNamePtBr}</h3>
+              <h4 className={css.otherNames}>{plant.otherPopularNamesPtBr.map(name => <span key={name}>{name}</span>)}</h4>
+              <h5 className={css.scientificName}>{plant.scientificName}</h5>
             </div>
             <div className={css.actionsContainer}>
               <div className={css.labelArea}>

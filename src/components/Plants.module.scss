@@ -107,10 +107,23 @@
       .plantTitle{
         font-size: 16px;
         font-family: 'Helvetica Rounded Bold';
-        margin-bottom: 5px;
         @media only screen and (min-width: 480px) { 
           font-size: 12px;
         }
+      }
+      .otherNames{
+        font-family: 'Helvetica Rounded Bold';
+        font-size: 12px;
+        margin-bottom: 5px;
+        color: $gray;
+        span{
+          display: block;
+          margin-right: 5px;
+        }
+      }
+      .scientificName{
+        font-size: 12px;
+        font-family: 'Helvetica Light';
       }
       .plantPrice{
         font-size: 12px;

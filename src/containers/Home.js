@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import firebase from "firebase/app";
 import { connect } from 'react-redux';
 
 import Api from '../libs/Api';
 import { setPlants }  from  '../store/plants';
-import { setUser, addGardemPlant, removeGardemPlant } from '../store/user';
+import { deleteUser, setUser, addGardemPlant, removeGardemPlant } from '../store/user';
 
 import css from './Home.module.scss';
 import MainSlider from '../components/MainSlider';
@@ -22,10 +23,23 @@ const home = props => {
 
   useEffect(() => {
     setLoadingPlants(true);
-    Api.getPlants().then((res) => {
-      setPlants(res);
-      setLoadingPlants(false);
-    });
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        Api.getUserData(user.uid).then(userData => {
+          setUser({ ...userData });
+          Api.getPlants().then((res) => {
+            setPlants(res);
+            setLoadingPlants(false);
+          });
+        });
+      } else {
+        deleteUser();
+        props.history.push(`/`);
+      }
+    })}, []);
+
+  useEffect(() => {
+    
   }, []);
 
   const addToGardem = (plant) => {

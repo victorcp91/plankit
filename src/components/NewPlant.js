@@ -163,8 +163,8 @@ const newPlant = props => {
     <>
       <section className={css.about}>
         {imageFile ? 
-        <div
-          style={{backgroundImage: 'url(' + URL.createObjectURL(imageFile[0]) + ')'}}
+        <img
+          src={URL.createObjectURL(imageFile[0])}
           className={css.imagePreview}
         />:
         <div {...getRootProps()} className={css.dragAndDropArea}>

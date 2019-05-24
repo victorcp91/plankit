@@ -2,11 +2,13 @@
 
 .presentationText{
   width: 100%;
-  max-width: 80%;
-  margin: 50px auto;
+  max-width: 864px;
+  margin: 25px auto;
+  padding: 0 20px;
   font-size: 18px;
   line-height: 30px;
   font-family: 'Helvetica Light';
+  box-sizing: border-box;
 }
 .divisor{
   border: 2px solid $lightGray;

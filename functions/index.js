@@ -7,7 +7,7 @@ const path = require('path');
 const spawn = require('child-process-promise').spawn;
 
 const gcconfig = {
-  projectId: "plankit-app",
+  projectId: "plankitclub",
   keyFilename: "serviceAccountKey.json"
 };  
 

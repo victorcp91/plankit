@@ -72,9 +72,7 @@
       box-sizing: border-box;
       margin-bottom: 15px;
       .image{
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
+        object-fit: cover;
         max-width: 150px;
         max-height: 150px;
         width: 40vw;

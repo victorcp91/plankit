@@ -246,7 +246,7 @@ const newPost = props => {
       <div className={`${css.plantsContainer} ${css.added}`}>
         {postPlants.map(plant => (
           <div className={css.plant} key={`current_${plant.id}`}>
-            <div className={css.image} style={{backgroundImage: `url(${plant.image})`}} />
+            <img className={css.image} src={plant.image} />
             <div className={css.infoContainer}> 
               <div className={css.info}>
                 <h1 className={css.mainName}>{plant.popularNamePtBr}</h1>
@@ -266,7 +266,7 @@ const newPost = props => {
       <div className={`${css.plantsContainer}`}>
         {getFilteredPlants().map(plant => (
           <div className={css.plant} key={`add_${plant.id}`}>
-            <div className={css.image} style={{backgroundImage: `url(${plant.image})`}} />
+            <img className={css.image} src={plant.image} />
             <div className={css.infoContainer}> 
               <div className={css.info}>
                 <h1 className={css.mainName}>{plant.popularNamePtBr}</h1>

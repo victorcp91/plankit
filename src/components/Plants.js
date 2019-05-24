@@ -64,7 +64,7 @@ const plants = React.memo(props => {
         </>: null }
       {props.plants.map(plant => (
         <div key={plant.id} className={`${css.plantCard} ${props.myArea ? css.small :'' }`}>
-          <div className={css.imageContainer} style={{backgroundImage: `url(${plant.image})`}} />
+          <img className={css.imageContainer} src={plant.image} />
           <span className={css.mobileContainer}>
             <div className={css.infoContainer}>
               <h3 className={css.plantTitle}>{plant.popularNamePtBr}</h3>

@@ -4,7 +4,7 @@ const firebase = require("firebase/app");
 require("firebase/firestore");
 require("firebase/storage");
 
-axios.defaults.baseURL = 'https://us-central1-plankit-app.cloudfunctions.net';
+axios.defaults.baseURL = 'https://us-central1-plankitclub.cloudfunctions.net';
 class Api {
 
   getPlants = async () => {
@@ -317,6 +317,17 @@ class Api {
       });
     });
     return posts;
+  }
+
+  getChannel = async (slug) => {
+    const db = firebase.firestore();
+    let channels = [];
+    await db.collection("channels").where("slug", "==", slug).get().then(snapshot => {
+      channels = snapshot.docs.map(channel => {
+        return {id: channel.id, ...channel.data()}
+      });
+    });
+    return channels;
   }
 }
 

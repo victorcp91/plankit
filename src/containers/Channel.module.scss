@@ -1,0 +1,111 @@
+@import '../libs/variables.scss';
+
+.channelContainer{
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding-top: 48px;
+  .cover{
+    object-fit: cover;
+    width: 100%;
+    height: 200px;
+  }
+  .profile{
+    @extend .inputStyle;
+    object-fit: cover;
+    display: inline-block;
+    width: 35vw;
+    height: 35vw;
+    max-width: 170px;
+    max-height: 170px;
+    margin-left: 20px;
+    margin-top: -50px;
+    @media only screen and (min-width: 600px) { 
+      margin-left: 60px;
+      width: 170px;
+      height: 170px;
+    }
+  }
+  .info{
+    padding: 10px 20px 20px 20px;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    width: calc(100% - 45vw);
+    @media only screen and (min-width: 600px) { 
+      padding: 30px 20px 20px 20px;
+      font-size: wrap;
+    }
+    .name,.description{
+      font-family: 'Helvetica Light';
+    }
+    .name{
+      font-size: 20px;
+      @media only screen and (min-width: 600px) { 
+        font-size: 30px;
+      }
+    }
+    .description{
+      margin-top: 5px;
+      font-size: 14px;     
+      @media only screen and (min-width: 600px) { 
+        font-size: 16px;
+      }
+    }
+  }
+  .about{
+    margin:10px 80px;
+    font-family: 'Helvetica Light';
+    box-sizing: border-box;
+  }
+  .lastPost{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: 50px 0;
+      padding: 0 20px;
+      box-sizing: border-box;
+      // max-height: 300px;
+      @media only screen and (min-width: 750px) { 
+        justify-content: left;
+        font-size: 16px;
+      }
+    .thumb{
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 10px;
+      max-width: 450px;
+      object-fit: cover;
+    }
+    .lastPostInfo{
+      display: inline-block;
+      vertical-align: top;
+      width: 100%;
+      max-width: 450px;
+      min-width: 300px;
+      padding: 0 15px 0 15px;
+      box-sizing: border-box;
+      flex: 1;
+      .title{
+        font-family: 'Helvetica Rounded Bold';
+        font-size: 18px;
+        margin: 0 0 10px 0;
+      }
+      .description{
+        font-family: 'Helvetica Light';
+        line-height: 20px;
+      }
+      .date{
+        width: 100%;
+        display: block;
+        margin-top: 20px;
+        text-align: right;
+        font-family: 'Helvetica Light';
+        font-size: 14px;
+      }
+    }
+  }
+  
+}

@@ -39,10 +39,14 @@ const myArea = props => {
           if(userData.channelOwnerPermission && userData.channelOwnerPermission === 'approved') {
             Api.getMyChannels(user.uid).then(channels => {
               setChannels(channels);
-              Api.getChannelPosts(channels[0].id).then(posts => {
-                setChannelPosts(channels[0].id, posts);
+              if(channels && channels.length){
+                Api.getChannelPosts(channels[0].id).then(posts => {
+                  setChannelPosts(channels[0].id, posts);
+                  setLoading(false);
+                })
+              } else {
                 setLoading(false);
-              })
+              }
             });
           } else {
             setLoading(false);
@@ -200,7 +204,7 @@ const myArea = props => {
         {currentSection === 'newPlant' && <NewPlant user={props.user}/>}
         {currentSection === 'myStore' &&  <SellerForm user={props.user}/>}
         {currentSection === 'myChannel' &&  <MyChannel user={props.user} channel={myChannels()}/>}
-        {currentSection === 'myPosts' && <Posts posts={myChannels().posts ? myChannels().posts : []}/>}
+        {currentSection === 'myPosts' && <Posts posts={myChannels() && myChannels().posts ? myChannels().posts : []}/>}
         {currentSection === 'newPost' && <NewPost user={props.user} channel={myChannels()} plants={props.plants}/>}
       </main>
     </div>

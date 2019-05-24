@@ -34,13 +34,12 @@ const home = props => {
         });
       } else {
         deleteUser();
-        props.history.push(`/`);
+        Api.getPlants().then((res) => {
+          setPlants(res);
+          setLoadingPlants(false);
+        });
       }
     })}, []);
-
-  useEffect(() => {
-    
-  }, []);
 
   const addToGardem = (plant) => {
     const user = { ...props.user };
@@ -163,7 +162,7 @@ const home = props => {
   return(
     <div className={css.container}>
       <MainSlider />
-      <PresentationArea />
+      <PresentationArea text="Etiam luctus tincidunt justo in aliquam. Nulla quam diam, auctor et turpis nec, bibendum vehicula velit. Nulla sollicitudin ornare justo, a blandit est vehicula a. Integer imperdiet tortor eget congue consequat. Provitae justo auctor fermentum aliquet a sem." />
       <Search
         searchTerm={setCurrentSearchTerm}
         order={setPlantsSort}

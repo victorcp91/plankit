@@ -66,7 +66,7 @@ const plantInfo = props => {
         onClick={close}
         className={css.closeButton} 
         />
-      <div className={css.imageContainer} style={{backgroundImage: `url(${plant.image})`}} />
+      <img className={css.imageContainer} src={plant.image} />
       <div className={css.infoContainer}>
         <h3 className={css.plantTitle}>{plant.popularNamePtBr}</h3>
         {/* <div className={css.plantPrice}>

@@ -7,40 +7,41 @@ import moment from 'moment';
 import Api from '../libs/Api';
 
 import css from './Channel.module.scss';
+import ChannelHeader from '../components/ChannelHeader';
 import PresentationArea from '../components/PresentationArea';
 import Posts from '../components/Posts';
 import { setChannels, setChannelPosts } from '../store/channels';
+import { deleteUser, setUser } from '../store/user';
+
 
 const channel = props => {
 
   const [loading, setLoading] = useState(true);
-  const [channelSlug, setChannelSlug] = useState('');
+  const [channelSlug, setChannelSlug] = useState(props.match.params.channel);
   const [channelNotFound, setChannelNotFound] = useState(false);
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(false);
     const { channel, post } = props.match.params;
-    setChannelSlug(channel);
-    
     Api.getChannel(channel).then(res => {
       if(res.length){
+        console.log('teste', getLastPost(), channelSlug, props.channels.length);
         setChannels(res);
-        Api.getChannelPosts(res[0].id).then(posts => {
-          setChannelPosts(res[0].id, posts);
-          setLoading(false);
-        })
+          Api.getChannelPosts(res[0].id).then(posts => {
+            setChannelPosts(res[0].id, posts);
+            setLoading(false);
+          })
       } else{
         setChannelNotFound(true);
         setLoading(false);
       }
     })
-   
     // props.history.push(`/`);
     
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         Api.getUserData(user.uid).then(userData => {
-          // setUser({ ...userData });
+          setUser({ ...userData });
         })
       }
     });
@@ -56,7 +57,9 @@ const channel = props => {
   const getLastPost = () => {
     const channel = props.channels.filter(c => c.slug === channelSlug);
     if(channel && channel.length && channel[0].posts && channel[0].posts.length){
-      return channel[0].posts[0];
+      const posts = channel[0].posts;
+      posts.sort((a,b) => moment(b.publishedAt) - moment(a.publishedAt));
+      return posts[0];
     } return false;
   }
 
@@ -65,6 +68,7 @@ const channel = props => {
     if(channel && channel.length && channel[0].posts && channel[0].posts.length){
       const firstPost = channel[0].posts[0];
       const posts = channel[0].posts.filter(post => post.id !== firstPost.id);
+      posts.sort((a,b) => moment(b.publishedAt) - moment(a.publishedAt))
       return posts;
     } return false;
   }
@@ -80,16 +84,13 @@ const channel = props => {
   return(
     currentChannel() ?
     <div className={css.channelContainer}>
-      <img className={css.cover} src={currentChannel().coverImage }/>
-      <img className={css.profile} src={currentChannel().profileImage}/>
-      <div className={css.info}>
-        <h1 className={css.name}>{currentChannel().name}</h1>
-        <p className={css.description}>{currentChannel().description}</p>
-      </div>
+      <ChannelHeader channel={currentChannel()} />      
       <PresentationArea text={currentChannel().about} />
       {getLastPost() ? 
         <div className={css.lastPost}>
-          <img src={getLastPost().image} className={css.thumb}/>
+          <Link to={`/${currentChannel().slug}/${getLastPost().slug}`}>
+            <img src={getLastPost().image} className={css.thumb}/>
+          </Link>
           <div className={css.lastPostInfo}>
             <h2 className={css.title}>{getLastPost().title}</h2>
             <p className={css.description}>{getLastPost().description} </p>
@@ -98,7 +99,7 @@ const channel = props => {
         </div>
       : null}
       {getPosts() ? 
-        <Posts posts={[getLastPost()]}/>
+        <Posts posts={getPosts()} channelSlug={currentChannel().slug}/>
       :null}
     </div> : 
     <div className={css.channelContainer}>

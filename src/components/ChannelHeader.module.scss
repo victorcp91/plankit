@@ -1,0 +1,60 @@
+@import '../libs/variables.scss';
+
+.channelHeader{
+  .cover{
+    object-fit: cover;
+    width: 100%;
+    height: 200px;
+    transition: height 1s ease-in-out;
+    &.post{
+      height: 0;
+    }
+  }
+  .profile{
+    @extend .inputStyle;
+    object-fit: cover;
+    display: inline-block;
+    width: 35vw;
+    height: 35vw;
+    max-width: 170px;
+    max-height: 170px;
+    margin-left: 20px;
+    margin-top: -50px;
+    @media only screen and (min-width: 600px) { 
+      margin-left: 60px;
+      width: 170px;
+      height: 170px;
+    }
+  }
+  .info{
+    padding: 10px 20px 20px 20px;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    width: fit-content;
+    @media only screen and (min-width: 600px) { 
+      padding: 30px 20px 20px 20px;
+      font-size: wrap;
+    }
+    .link{
+      text-decoration: none;
+      color: black;
+    }
+    .name,.description{
+      font-family: 'Helvetica Light';
+    }
+    .name{
+      font-size: 20px;
+      @media only screen and (min-width: 600px) { 
+        font-size: 30px;
+      }
+    }
+    .description{
+      margin-top: 5px;
+      font-size: 14px;     
+      @media only screen and (min-width: 600px) { 
+        font-size: 16px;
+      }
+    }
+  }
+}

@@ -20,24 +20,24 @@ const home = props => {
   const [loadingPlants, setLoadingPlants] = useState(false)
   const [searchTerm, setSearchTerm] = useState('');
   const [sortMethod, setSortMethod] = useState('');
+  const [featuredPosts, setFeaturedPosts] = useState([]);
 
   useEffect(() => {
     setLoadingPlants(true);
+    Api.getPlants().then((res) => {
+      setPlants(res);
+      setLoadingPlants(false);
+    });
+    Api.getFeaturedPosts().then((res) => {
+      setFeaturedPosts(res);
+    })
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         Api.getUserData(user.uid).then(userData => {
           setUser({ ...userData });
-          Api.getPlants().then((res) => {
-            setPlants(res);
-            setLoadingPlants(false);
-          });
         });
       } else {
         deleteUser();
-        Api.getPlants().then((res) => {
-          setPlants(res);
-          setLoadingPlants(false);
-        });
       }
     })}, []);
 
@@ -161,7 +161,7 @@ const home = props => {
 
   return(
     <div className={css.container}>
-      <MainSlider />
+      <MainSlider slides={featuredPosts}/>
       <PresentationArea text="Etiam luctus tincidunt justo in aliquam. Nulla quam diam, auctor et turpis nec, bibendum vehicula velit. Nulla sollicitudin ornare justo, a blandit est vehicula a. Integer imperdiet tortor eget congue consequat. Provitae justo auctor fermentum aliquet a sem." />
       <Search
         searchTerm={setCurrentSearchTerm}

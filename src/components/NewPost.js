@@ -83,12 +83,12 @@ const newPost = props => {
     }
   }
 
+
   const createPost = () => {
     let plants = postPlants.map(p => p.id);
 
-    const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
-    const content = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
-
+    const content = convertToRaw(editorState.getCurrentContent());
+    // const content = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
     Api.createPost({
       author: props.user.uid,
       createdAt: moment().format(),
@@ -99,6 +99,8 @@ const newPost = props => {
       image: postImageURL,
       youtubeId,
       content,
+      slug: createSlug(postTitle),
+      channelSlug: props.channel.slug,
       channel: props.channel.id
     }, postImageFile).then(res => {
       console.log('criado');
@@ -154,6 +156,22 @@ const newPost = props => {
   const removePostPlant = (plant) => {
     let newPostPlants = postPlants.filter(postPlant => postPlant.id !== plant.id);
     setPostPlants(newPostPlants);
+  }
+
+  const createSlug = (title) => {
+    let preparedString = title.toLowerCase();
+    const before = 'áàãâäéèêëíìîïóòõôöúùûü_ ';
+    const converted = 'aaaaaeeeeiiiiooooouuuu--';
+    let finalString = '';
+    for(let i=0; i < preparedString.length; i++) {
+      if(before.includes(preparedString[i])){
+        const index = before.indexOf(preparedString[i]);
+        finalString += converted[index];
+      } else {
+        finalString += preparedString[i];
+      }
+    }
+    return finalString;
   }
 
   const createPostDisplay = () => (
@@ -216,17 +234,15 @@ const newPost = props => {
           options: [
             'inline',
             'blockType',
-            'fontSize',
             'list',
             'textAlign',
             'colorPicker',
             'embedded',
-            'image',
             'link'],
           inline: { inDropdown: true },
           blockType: {
             inDropdown: true,
-            options: ['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'],
+            options: ['Normal', 'H2', 'H3', 'H4', 'H5', 'H6'],
             className: undefined,
             component: undefined,
             dropdownClassName: undefined,

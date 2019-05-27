@@ -1,12 +1,34 @@
 @import '../libs/variables.scss';
 
 .slider{
+  position: relative;
   width: 100%;
   overflow: hidden;
-  .sliderImage{
-    margin: 0 auto;
-    display: block;
-    width: 100%;
+  .postLink{
+    text-decoration: none;
+    color: black;
+    .imageContainer{
+      position: relative;
+      width: 100%;
+      padding-top: 56%;
+      .sliderImage{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+      }
+    }
+    .slideTitle{
+      position: absolute;
+      z-index: 50;
+      bottom: 40px;
+      padding: 10px 15px 10px 30px;
+      font-size: 30px;
+      background-color: $lightGray;
+      font-family: 'Helvetica Light';
+    }
   }
   .dots{
     bottom: 10px;

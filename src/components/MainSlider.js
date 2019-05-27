@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import css from './MainSlider.module.scss';
 import Slider from "react-slick";
 import sliderImage from '../assets/images/slider.png';
+
 
 const SampleNextArrow = props => {
   const { onClick } = props;
@@ -47,24 +49,16 @@ const mainSlider = props => {
 
   return(
     <Slider {...settings} className={css.slider}>
-      <div>
-        <img src={sliderImage} alt="text" className={css.sliderImage}/>
-      </div>
-      <div>
-        <img src={sliderImage} alt="text" className={css.sliderImage}/>
-      </div>
-      <div>
-        <img src={sliderImage} alt="text" className={css.sliderImage}/>
-      </div>
-      <div>
-        <img src={sliderImage} alt="text" className={css.sliderImage}/>
-      </div>
-      <div>
-        <img src={sliderImage} alt="text" className={css.sliderImage}/>
-      </div>
-      <div>
-        <img src={sliderImage} alt="text" className={css.sliderImage}/>
-      </div>
+      {props.slides.map(slide => (
+        <div>
+          <Link className={css.postLink} to={`${slide.channelSlug}/${slide.slug}`}>
+            <div className={css.imageContainer}>
+              <img src={slide.image} alt="text" className={css.sliderImage}/>
+            </div>
+            <h1 className={css.slideTitle}>{slide.title}</h1>
+          </Link>
+        </div>
+      ))}
     </Slider> 
   );
 

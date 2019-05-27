@@ -39,6 +39,30 @@ class Api {
         return [];
     });
   }
+  
+
+  getPlant = async (id) => {
+    const db = firebase.firestore();
+    let plantData = null;
+
+    await db.collection("plants").doc(id).get().then((doc) => {
+      if(doc.exists){
+        plantData = {id, ...doc.data()} 
+      }
+    });
+    return plantData;
+  }
+
+  getFeaturedPosts = async () => {
+    const db = firebase.firestore();
+    let posts = [];
+    await db.collection("posts").orderBy("publishedAt","desc").limit(6).get().then(snapshot => {
+      posts = snapshot.docs.map(post => {
+        return {id: post.id, ...post.data()}
+      });
+    });
+    return posts;
+  }
 
   getUserData = async (userId) => {
     const db = firebase.firestore();

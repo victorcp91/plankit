@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Home from './containers/Home';
 import MyArea from './containers/MyArea';
 import Channel from './containers/Channel';
+import Post from './containers/Post';
 
 const app = props => {
   const store = getStore();
@@ -17,6 +18,7 @@ const app = props => {
         <Header />
         <Switch>
           <Route path="/minha-area" component={MyArea}/>
+          <Route path="/:channel/:post" component={Post}/>
           <Route path="/:channel" component={Channel}/>
           <Route path="/" component={Home}/>
         </Switch>

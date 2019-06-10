@@ -54,9 +54,18 @@ const plantInfo = props => {
     });
     return info;
   }
+
+  const insideMyGardem = (plantId) => {
+    if(props.user.gardem && props.user.gardem.length){
+      return props.user.gardem.find(plant => plant.id === plantId)
+    }
+  }
+
   const close = () => {
     props.close();
   }
+
+  
 
   const plant = props.plant;
 
@@ -69,13 +78,18 @@ const plantInfo = props => {
       <img className={css.imageContainer} src={plant.image} />
       <div className={css.infoContainer}>
         <h3 className={css.plantTitle}>{plant.popularNamePtBr}</h3>
+        {plant.otherPopularNamesPtBr.map(name => (
+          <h3 key={name} className={css.plantName}>{name}</h3>
+        ))}
         {/* <div className={css.plantPrice}>
           R$ <span className={css.green}>{plant.price.maximumBrl}</span>
         </div> */}
         <div className={css.actionsContainer}>
           <div className={css.buttonArea}>
             <button 
-              className={`${css.actionButton} ${css.garden}`}
+              className={`${css.actionButton}
+              ${insideMyGardem(plant.id) ? css.active : ''}`}
+              onClick={props.myGarden}
             >
               <img className={css.icon} src={houseIcon} alt="Meu Jardim"/>
             </button>
@@ -84,14 +98,14 @@ const plantInfo = props => {
             </label>
           </div>
 
-          <div className={css.buttonArea}>
+          {/* <div className={css.buttonArea}>
             <button className={`${css.actionButton} ${css.location}`}>
               <img className={css.icon} src={pinIcon} alt="Onde encontrar"/>
             </button>
             <label className={css.label}>
             Onde<br/>Encontrar
             </label>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className={css.info}>

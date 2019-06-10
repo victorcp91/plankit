@@ -7,6 +7,17 @@ require("firebase/storage");
 axios.defaults.baseURL = 'https://us-central1-plankitclub.cloudfunctions.net';
 class Api {
 
+  getChannels = async () => {
+    const db = firebase.firestore();
+    let channels = [];
+    await db.collection("channels").get().then((snapshot) => {
+      channels = snapshot.docs.map(channel => {
+        return {id: channel.id, ...channel.data()}
+      });
+    })
+    return channels;
+  }
+
   getPlants = async () => {
     const db = firebase.firestore();
     let plants = []
@@ -18,21 +29,21 @@ class Api {
     return plants;
   }
 
-  getFilteredPlants = async (filters) => {
-    let data = filters;
-    axios.post('/filteredPlants', data, { headers: { 'Content-Type': 'application/json' } })
+  getFilteredPlants = async (filters, searchTerm) => {
+    let data = {filters, searchTerm};
+    return axios.post('/filteredPlants', data, { headers: { 'Content-Type': 'application/json' } })
       .then(res => {
-        return res;
+        return res.data;
     }).catch(err => {
         return [];
     });
   }
 
-  getSearchedPlants = async (keywords) => {
+  getSearchedChannels = async (searchTerm) => {
     let data = {
-      keywords: keywords
+      searchTerm
     };
-    return axios.post('/searchPlants', data, { headers: { 'Content-Type': 'application/json' } })
+    return axios.post('/searchChannels', data, { headers: { 'Content-Type': 'application/json' } })
       .then(res => {
         return res.data;
     }).catch(err => {
@@ -84,7 +95,9 @@ class Api {
       email: user.email,
       avatar: user.photoURL,
       first_login: user.metadata.creationTime,
-      gardem: []
+      gardem: [],
+      followedChannels: [],
+      savedPosts: []
     });
   }
 
@@ -353,6 +366,31 @@ class Api {
     });
     return channels;
   }
+
+  followChannel = async (user, channel) => {
+    const newChannel = {
+      id: channel.id,
+      profileImage: channel.profileImage,
+      slug: channel.slug,
+      name: channel.name,
+      description: channel.description,
+    }
+
+    const db = firebase.firestore();
+    await db.collection("users").doc(user.uid).update({
+      followedChannels: firebase.firestore.FieldValue.arrayUnion(newChannel)
+    });
+  }
+
+  unfollowChannel = async (user, channelId) => {
+    let followedChannels = user.followedChannels;
+    followedChannels = followedChannels.filter(c => c.id !== channelId);
+    const db = firebase.firestore();
+    await db.collection("users").doc(user.uid).update({
+      followedChannels: followedChannels
+    });
+  }
+  
 }
 
 export default new Api();

@@ -2,21 +2,30 @@
 
 .plantInfo{
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%) scale(0.8);
+  top: 0;
+  left: 0;
   z-index: 2;
   width: 100vw;
-  max-width: 500px;
-  height: 90vh;
+  height: 100vh;
   background-color: $lightGray;
   box-shadow: 3px 3px 10px $lightShadow;
   overflow-y: scroll;
   overflow-x: hidden;
   box-sizing: border-box;
   transition: transform .4s cubic-bezier(0.000, 1.135, 0.535, 0.965);
+  transform: scale(0.8);
+  @media only screen and (min-width: 480px) { 
+    max-width: 500px;
+    height: 90vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0.8);
+  }
   &.opened{
-    transform: translate(-50%,-50%) scale(1);
+    transform: scale(1);
+    @media only screen and (min-width: 480px) { 
+      transform: translate(-50%,-50%) scale(1);
+    }
   }
   .closeButton{
     width: 70px;
@@ -65,6 +74,11 @@
       font-family: 'Helvetica Rounded Bold';
       margin-bottom: 5px;
     }
+    .plantName{
+      display: inline-block;
+      font-size: 15px;
+      margin-right: 5px;
+    }
     .plantPrice{
       font-size: 18px;
       .green{
@@ -102,6 +116,9 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%,-50%);
+          }
+          &.active{
+            background-color: $lightGreen;
           }
         }
         &:hover{

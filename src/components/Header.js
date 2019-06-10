@@ -76,7 +76,7 @@ const header = props => {
               <>
                 <li className={css.option}>
                   <Link 
-                    to="minha-area"
+                    to="/minha-area"
                     className={css.link}>
                       Minha Área
                   </Link>

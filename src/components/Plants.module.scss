@@ -38,7 +38,7 @@
     background-color: $backgroundLightGray;
     max-width: 350px;
     margin: 20px auto;
-    padding: 10px 10px 40px 10px;
+    padding: 10px;
     @media only screen and (min-width: 480px) { 
       padding: 0;
       margin: 1.5%;
@@ -134,7 +134,7 @@
       background-color: $backgroundLightGray;
       position: absolute;
       right: 0;
-      bottom: 40px;
+      bottom: 20px;
       @media only screen and (min-width: 480px) { 
         position: relative;
         height: 40%;
@@ -144,24 +144,18 @@
       }
       .labelArea{
         display: inline-block;
+        vertical-align: top;
         height: 100%;
         text-align: center;
         pointer-events: none;
-        text-align: center;
-        margin-right: 20px;
+        margin-right: 30px;
         @media only screen and (min-width: 480px) { 
           display: block;
           width: 100%;
           margin: 0;
         }
-        &.infoButton{  
-          display: none;
-          @media only screen and (min-width: 480px) { 
-            display: block;
-          }
-        }
         .label{
-          font-size: 12px;
+          font-size: 10px;
           font-family: 'Helvetica Rounded Bold';
           color: $green;
           transition: opacity .2s cubic-bezier(0.630, 1.235, 1.000, 0.965);
@@ -171,6 +165,7 @@
             left: 50%;
             top: 75%;
             transform: translate(-50%,-50%);
+            font-size: 12px;
           }
         }
         .actionButton{

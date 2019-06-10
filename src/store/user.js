@@ -39,6 +39,32 @@ export function removeGardemPlant(plantId) {
   getStore().dispatch({ type: UPDATE_USER, updatedUser });
 }
 
+export async function addFollowedChannel(user, channel) {
+  let followedChannels = user.followedChannels;
+  const newChannel = {
+    id: channel.id,
+    profileImage: channel.profileImage,
+    slug: channel.slug,
+    name: channel.name,
+    description: channel.description,
+  }
+  followedChannels.push(newChannel);
+  let updatedUser = {
+    ...user,
+    followedChannels
+  }
+  getStore().dispatch({ type: UPDATE_USER, updatedUser });
+}
+
+export function removeFollowedChannel(user, channelId) {
+  const followedChannels = user.followedChannels.filter(c => c.id !== channelId);
+  let updatedUser = {
+    ...user,
+    followedChannels: followedChannels ? followedChannels : []
+  }
+  getStore().dispatch({ type: UPDATE_USER, updatedUser });
+}
+
 export default function reducer(state = {}, action) {
   switch (action.type) {
     case SET_USER: {

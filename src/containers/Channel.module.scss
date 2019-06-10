@@ -10,6 +10,10 @@
     font-family: 'Helvetica Light';
     box-sizing: border-box;
   }
+  a{
+    text-decoration: none;
+    color: $black;
+  }
   .lastPost{
       display: flex;
       flex-wrap: wrap;
@@ -17,10 +21,7 @@
       justify-content: center;
       width: 100%;
       margin: 50px 0;
-      padding: 20px;
       box-sizing: border-box;
-      background-color: $lightGray;
-      // max-height: 300px;
       @media only screen and (min-width: 750px) { 
         justify-content: left;
         font-size: 16px;
@@ -54,7 +55,6 @@
         width: 100%;
         display: block;
         margin-top: 20px;
-        text-align: right;
         font-family: 'Helvetica Light';
         font-size: 14px;
       }

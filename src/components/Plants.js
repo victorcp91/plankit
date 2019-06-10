@@ -23,15 +23,16 @@ const plants = React.memo(props => {
     return props.plants.find(plant => plant.id === selectedPlant);
   }
 
-  const setMyGarden = (plant) => {
+  const setMyGarden = () => {
+    
     if(!props.user || !props.user.gardem){
       setLoginDisclaimer('Para organizar suas plantas do seu jeitinho é necessário fazer login ; )')
       toogleLoginModal();
     } else {
-      if(props.user.gardem.find(p => p.id === plant.id)){
-        props.removeGardemPlant(plant);
+      if(props.user.gardem.find(p => p.id === getSelectedPlant().id)){
+        props.removeGardemPlant(getSelectedPlant());
       }else{
-        props.addGardemPlant(plant);
+        props.addGardemPlant(getSelectedPlant());
       }
     }
   }
@@ -49,8 +50,7 @@ const plants = React.memo(props => {
       return props.user.gardem.find(plant => plant.id === plantId)
     }
   }
-
-
+  
   return(
     props.plants && props.plants.length || props.loading ? 
     <>
@@ -60,7 +60,10 @@ const plants = React.memo(props => {
         <span className={css.overlay}/>
         <PlantInfo
           plant={getSelectedPlant()}
-          close={closeInfoModal}/>
+          close={closeInfoModal}
+          user={props.user}
+          myGarden = {setMyGarden}
+          />
         </>: null }
       {props.plants.map(plant => (
         <div key={plant.id} className={`${css.plantCard} ${props.myArea ? css.small :'' }`}>
@@ -117,8 +120,12 @@ const plants = React.memo(props => {
           close={toogleLoginModal}
           disclaimer={loginDisclaimer}/>
       </> : null}
-      {props.loading ? <h1>LOADING</h1> : null}
-    </>: <h1>{props.myArea ? 'Você ainda não adicionou nenhuma planta no seu jardim': 'Ops! Nenhuma planta foi encontrada. :('}</h1>
+    </>
+    : <>
+      {props.loading ?
+        <h1>LOADING</h1>
+        :<h1>{props.myArea ? 'Você ainda não adicionou nenhuma planta no seu jardim': 'Ops! Nenhuma planta foi encontrada. :('}</h1>}
+      </>
   );
 });
 

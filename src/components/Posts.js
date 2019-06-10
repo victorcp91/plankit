@@ -10,7 +10,7 @@ const posts = React.memo(props => {
   return(
     <div className={css.postsContainer}>
       {props.posts.map(post => 
-        (<Link className={css.postLink} to={`/${props.channelSlug}/${post.slug}`}>
+        (<Link key={post.slug} className={css.postLink} to={`/${post.channelSlug}/${post.slug}`}>
           <div className={css.postCard}>
             <div className={css.imageContainer}>
               <img className={css.image} src={post.image}/>

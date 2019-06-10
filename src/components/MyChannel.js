@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Api from '../libs/Api';
 import { setUser } from '../store/user';
 import css from './MyChannel.module.scss';
@@ -251,6 +252,9 @@ const myChannel = props => {
 
   const createChannelDisplay = () => (
     <div className={css.requestChannelContainer}>
+      {props.channel ?
+        <Link className={css.channelLink} to={`/${props.channel.slug}`}>Ir para o meu canal</Link>
+      : null}
       <div className={css.mainInfoContainer}>
         <DropZone
           imageFile={profileImageFile}

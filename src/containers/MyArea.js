@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import firebase from "firebase/app";
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
 import Api from '../libs/Api';
 
 import { deleteUser } from '../store/user';
-import { setUser, removeGardemPlant } from '../store/user';
+import { setUser, removeGardemPlant, removeFollowedChannel } from '../store/user';
 
 import css from './MyArea.module.scss';
 import Plants from '../components/Plants';
 import NewPlant from '../components/NewPlant';
 import SellerForm from '../components/SellerForm';
 import MyChannel from '../components/MyChannel';
+import Channels from '../components/Channels';
 import NewPost from '../components/NewPost';
 import Posts from '../components/Posts';
 // import optionsIcon from '../assets/icons/optionsIcon.svg';
@@ -23,10 +23,8 @@ import myWishesIcon from '../assets/icons/myWishesIcon.svg';
 import newPlantIcon from '../assets/icons/newPlantIcon.svg';
 import { setChannels, setChannelPosts } from '../store/channels';
 
-
-
 const myArea = props => {
-  const [currentSection, setCurrentSection] = useState('newPost');
+  const [currentSection, setCurrentSection] = useState('following');
   const [iconAnimation, setIconAnimation] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -70,6 +68,9 @@ const myArea = props => {
   const setMyGardenSection = () => {
     setCurrentSection('myGarden');
   }
+  const setFollowingSection = () => {
+    setCurrentSection('following');
+  }
   const setNewPlantSection = () => {
     setCurrentSection('newPlant');
   }
@@ -89,6 +90,8 @@ const myArea = props => {
   const loadSectionIcon = () => {
     switch(currentSection){
       case 'myGarden': 
+        return houseIcon;
+      case 'following':
         return houseIcon;
       case 'myWishes': 
         return myWishesIcon;
@@ -144,6 +147,15 @@ const myArea = props => {
     }
   }
 
+  const unfollowChannel = (channelId) => {
+    removeFollowedChannel(props.user, channelId);
+    Api.unfollowChannel(props.user, channelId).then(() => {
+      Api.getUserData(props.user.uid).then(userData => {
+        setUser({ ...userData });
+      });
+    });
+  }
+
   return(
    loading ? <h1>CARREGANDO</h1> 
     :<div className={css.container}>
@@ -162,8 +174,8 @@ const myArea = props => {
             </button>
           </li> */}
           <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'following' ? css.active : ''}`}>
-            <button onClick={setMyGardenSection}>
-              <img className={css.icon} src={houseIcon} alt="Meu Jardim" />
+            <button onClick={setFollowingSection}>
+              <img className={css.icon} src={houseIcon} alt="Seguindo" />
               <span className={css.label}>Seguindo</span>
             </button>
           </li>
@@ -201,6 +213,10 @@ const myArea = props => {
           <h1 className={css.welcome}>{props.user.display_name ?`${getDayTimeGreenting()}, ${props.user.display_name.split(' ')[0]}!`: `${getDayTimeGreenting()}!`}</h1>
         </div>
         {currentSection === 'myGarden' && myGardem()}
+        {currentSection === 'following' &&
+          <Channels
+            channels={props.user && props.user.followedChannels ? props.user.followedChannels : []}
+            unfollow={unfollowChannel}/>}
         {currentSection === 'newPlant' && <NewPlant user={props.user}/>}
         {currentSection === 'myStore' &&  <SellerForm user={props.user}/>}
         {currentSection === 'myChannel' &&  <MyChannel user={props.user} channel={myChannels()}/>}

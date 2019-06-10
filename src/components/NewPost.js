@@ -26,7 +26,7 @@ const newPost = props => {
   useEffect(() => {
     let searchTimer = setTimeout(() => {
       if(searchTerm){
-        Api.getSearchedPlants(searchTerm).then(plants => {
+        Api.getFilteredPlants(null, searchTerm).then(plants => {
           setPlants(plants);
         })
       }

@@ -32,7 +32,7 @@ const search = props => {
       <img className={css.searchIcon} src={searchIcon} alt="search icon"/>
       <input
         className={css.searchInput}
-        placeholder="Buscar planta"
+        placeholder={props.placeholder}
         type="text"
         value={searchTerm}
         onChange={handleSearchTerm} 

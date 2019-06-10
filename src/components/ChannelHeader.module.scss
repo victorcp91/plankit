@@ -1,6 +1,7 @@
 @import '../libs/variables.scss';
 
 .channelHeader{
+  position: relative;
   .cover{
     object-fit: cover;
     width: 100%;
@@ -57,4 +58,34 @@
       }
     }
   }
+  .followArea{
+    margin-top: 10px;
+    .follow{
+      @extend .inputStyle;
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+    label{
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 5px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    &:hover{
+      .follow{
+        background-color: $lightGreen;
+      }
+    }
+    &.active{
+      .follow{
+        background-color: $lightGreen;
+      }
+    }
+  }
+  
 }

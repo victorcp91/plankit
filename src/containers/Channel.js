@@ -11,7 +11,7 @@ import ChannelHeader from '../components/ChannelHeader';
 import PresentationArea from '../components/PresentationArea';
 import Posts from '../components/Posts';
 import { setChannels, setChannelPosts } from '../store/channels';
-import { deleteUser, setUser } from '../store/user';
+import { deleteUser, setUser, addFollowedChannel, removeFollowedChannel } from '../store/user';
 
 
 const channel = props => {
@@ -25,7 +25,6 @@ const channel = props => {
     const { channel, post } = props.match.params;
     Api.getChannel(channel).then(res => {
       if(res.length){
-        console.log('teste', getLastPost(), channelSlug, props.channels.length);
         setChannels(res);
           Api.getChannelPosts(res[0].id).then(posts => {
             setChannelPosts(res[0].id, posts);
@@ -81,10 +80,33 @@ const channel = props => {
     );
   }
 
+  const follow = () => {
+    if(props.user && props.user.followedChannels){
+      let followedChannels = props.user.followedChannels.find(c => c.id === currentChannel().id);
+      if(!followedChannels){
+        addFollowedChannel(props.user, currentChannel());
+        Api.followChannel(props.user, currentChannel()).then(() => {
+          Api.getUserData(props.user.uid).then(userData => {
+            setUser({ ...userData });
+          });
+        });
+      }else {
+        removeFollowedChannel(props.user, currentChannel());
+        Api.unfollowChannel(props.user, currentChannel()).then(() => {
+          Api.getUserData(props.user.uid).then(userData => {
+            setUser({ ...userData });
+          });
+        });
+      }
+    }else {
+      console.log('faça login')
+    }
+  }
+
   return(
     currentChannel() ?
     <div className={css.channelContainer}>
-      <ChannelHeader channel={currentChannel()} />      
+      <ChannelHeader channel={currentChannel()} user={props.user} follow={follow}  />      
       <PresentationArea text={currentChannel().about} />
       {getLastPost() ? 
         <div className={css.lastPost}>
@@ -92,7 +114,9 @@ const channel = props => {
             <img src={getLastPost().image} className={css.thumb}/>
           </Link>
           <div className={css.lastPostInfo}>
-            <h2 className={css.title}>{getLastPost().title}</h2>
+            <Link to={`/${currentChannel().slug}/${getLastPost().slug}`}>
+              <h2 className={css.title}>{getLastPost().title}</h2>
+            </Link>
             <p className={css.description}>{getLastPost().description} </p>
             <label className={css.date}>{moment(getLastPost().publishedAt).format('DD/MM/YY')}</label>
           </div>

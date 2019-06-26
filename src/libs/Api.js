@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { comparableString } from './Utils';
+import { Subscriber } from 'rxjs';
 const firebase = require("firebase/app");
 require("firebase/firestore");
 require("firebase/storage");
@@ -138,7 +139,7 @@ class Api {
     } else if(image.type.toLowerCase().includes('jpeg')){
       fileName = fileName + '.jpeg';
     }
-    storage.child(`plants/${fileName}`).put(image).then(snap => {
+    return storage.child(`plants/${fileName}`).put(image).then(snap => {
       snap.ref.getDownloadURL().then(downloadURL => {
         let newDownloadURL = downloadURL.split('&token=')[0];
         const splitedDownloadUrl = newDownloadURL.split(fileName);
@@ -146,7 +147,7 @@ class Api {
 
         const db = firebase.firestore();
 
-        db.collection("plants").doc().set({
+        return db.collection("plants").doc().set({
           ...plant,
           image: newDownloadURL
         }).then(() => {
@@ -322,7 +323,7 @@ class Api {
       } else if(image.type.toLowerCase().includes('jpeg')){
         fileName = fileName + '.jpeg';
       }
-      storage.child(`posts/${fileName}`).put(image).then(snap => {
+      return storage.child(`posts/${fileName}`).put(image).then(snap => {
         snap.ref.getDownloadURL().then(downloadURL => {
           let newDownloadURL = downloadURL.split('&token=')[0];
           const splitedDownloadUrl = newDownloadURL.split(fileName);
@@ -338,7 +339,7 @@ class Api {
       });
     } else {
       const db = firebase.firestore();
-      db.collection("posts").doc().set({
+      return db.collection("posts").doc().set({
         ...post
       }).then(() => {
         return 'success';
@@ -377,7 +378,7 @@ class Api {
     }
 
     const db = firebase.firestore();
-    await db.collection("users").doc(user.uid).update({
+    return db.collection("users").doc(user.uid).update({
       followedChannels: firebase.firestore.FieldValue.arrayUnion(newChannel)
     });
   }
@@ -389,6 +390,23 @@ class Api {
     await db.collection("users").doc(user.uid).update({
       followedChannels: followedChannels
     });
+  }
+
+  updateChannelFollowers = async (channel, userId) => {
+    const db = firebase.firestore();
+    let subscribers = channel.subscribers;
+    console.log(subscribers, subscribers.find(subscriber => subscriber === userId));
+    if(subscribers.find(subscriber => subscriber === userId)){
+      subscribers = subscribers.filter(subscriber => subscriber !== userId);
+      console.log('remove', subscribers);
+    } else{
+      subscribers.push(userId);
+      console.log('add', subscribers);
+    }
+  
+    return db.collection("channels").doc(channel.id).update({subscribers}).then((res) => {
+      return 'success';
+    }).catch(err => console.log(err));
   }
   
 }

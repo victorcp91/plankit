@@ -8,8 +8,10 @@ import Api from '../libs/Api';
 import css from './NewPost.module.scss';
 import moment from 'moment';
 
+import { setChannelPosts } from '../store/channels';
 import DropZone from './DropZone';
 import Search from './Search';
+import spinner from '../assets/icons/loading.svg';
 
 const newPost = props => {
 
@@ -22,6 +24,7 @@ const newPost = props => {
   const [youtubeId, setYoutubeId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [postPlants, setPostPlants] = useState([]);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     let searchTimer = setTimeout(() => {
@@ -88,7 +91,7 @@ const newPost = props => {
     let plants = postPlants.map(p => p.id);
 
     const content = convertToRaw(editorState.getCurrentContent());
-    // const content = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
+    setSaving(true);
     Api.createPost({
       author: props.user.uid,
       createdAt: moment().format(),
@@ -103,7 +106,12 @@ const newPost = props => {
       channelSlug: props.channel.slug,
       channel: props.channel.id
     }, postImageFile).then(res => {
-      console.log('criado');
+      Api.getChannelPosts(props.channel.id).then(posts => {
+        setChannelPosts(props.channel.id, posts);
+        props.setPostsSection();
+      });
+    }).catch(() => {
+      setSaving(false);
     });
   }
 
@@ -176,6 +184,7 @@ const newPost = props => {
 
   const createPostDisplay = () => (
     <div className={css.newPostContainer}>
+      {saving && <div className={css.loadingContainer}><img src={spinner} className={css.loading}/></div>}
       <input
         className={`${css.field} ${css.title}`}
         placeholder="Título do post"

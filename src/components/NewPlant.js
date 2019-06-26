@@ -5,6 +5,7 @@ import filtersList from '../libs/filters.json';
 import css from './NewPlant.module.scss';
 import Api from '../libs/Api';
 
+import spinner from '../assets/icons/loading.svg';
 
 const newPlant = props => {
 
@@ -44,6 +45,8 @@ const newPlant = props => {
     poisonous: false,
   });
 
+  const [saving, setSaving] = useState(false);
+
   const onDrop = acceptedFile => {
     setImageFile(acceptedFile);
   };
@@ -56,7 +59,7 @@ const newPlant = props => {
   const handleInput = e => {
     const target = e.currentTarget;
     e.persist();
-    if(target.name === 'otherPopularNamePtBr'){
+    if(target.name === 'otherPopularNamesPtBr'){
       setNewPopularNamePtBr(target.value);
     }if(target.name === 'aboutText'){
       setAboutText(target.value);
@@ -142,7 +145,47 @@ const newPlant = props => {
       return false;
   }
 
+  const clearAll = () => {
+    setImageFile(null);
+    setPlantInfo({
+      popularNamePtBr: '',
+      otherPopularNamesPtBr: [],
+      scientificName: ''
+    });
+    setNewPopularNamePtBr('');
+    setAboutText('');
+
+    setFilters({
+    direct_light: false,
+    half_shadow: false,
+    indirect_light: false,
+    shadow: false,
+    marshy_ground: false,
+    moist_ground: false,
+    dry_ground: false,
+    sprinkler_watering: false,
+    ground_planting: false,
+    aerial_plant: false,
+    water_plant: false,
+    small_size: false,
+    midsize: false,
+    large: false,
+    tree: false,
+    vegetable_leaves: false,
+    vegetable: false,
+    herbs: false,
+    pancs: false,
+    fruitiful: false,
+    floriferous: false,
+    bindweed: false,
+    thorns: false,
+    poisonous: false,
+    });
+  }
+
   const createNewPlant = () => {
+
+    setSaving(true);
 
     let orderedFilters = Object.keys(filters).filter(key => filters[key]).sort();
     const plant = {
@@ -156,11 +199,17 @@ const newPlant = props => {
       }
     ]}
 
-    Api.createNewPlant(imageFile[0], plant);
+    Api.createNewPlant(imageFile[0], plant).then(()=> {
+      setSaving(false);
+      clearAll();
+    }).catch(()=>{
+      setSaving(false);
+    });
   }
  
   return (
     <>
+      {saving && <div className={css.loadingContainer}><img src={spinner} className={css.loading}/></div>}
       <section className={css.about}>
         {imageFile ? 
         <img
@@ -197,7 +246,7 @@ const newPlant = props => {
             <input
               className={css.field}
               type="text"
-              name="otherPopularNamePtBr"
+              name="otherPopularNamesPtBr"
               value={newPopularNamePtBr}
               onChange={handleInput} 
               onKeyDown={handleKeyDown}

@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import Switch from "react-switch";
 import { connect } from 'react-redux';
 import Api from '../libs/Api';
+import moment from 'moment';
 import { setPlants }  from  '../store/plants';
 import { deleteUser, setUser, addGardemPlant, removeGardemPlant } from '../store/user';
 import { comparableString } from '../libs/Utils';
@@ -171,10 +172,26 @@ const home = props => {
     }
     switch(sortMethod){
       case 'ascending':
-        filteredPlants = filteredPlants.sort();
+        filteredPlants = filteredPlants.sort((a,b) => {
+          if ( a.popularNamePtBr < b.popularNamePtBr ){
+            return -1;
+          }
+          if ( a.popularNamePtBr > b.popularNamePtBr ){
+            return 1;
+          }
+          return 0;
+        });
         break;
       case 'descending':
-          filteredPlants = filteredPlants.reverse();
+        filteredPlants = filteredPlants.sort((a,b) => {
+          if ( a.popularNamePtBr < b.popularNamePtBr ){
+            return 1;
+          }
+          if ( a.popularNamePtBr > b.popularNamePtBr ){
+            return -1;
+          }
+          return 0;
+        });
         break;
       case 'byDate':
         filteredPlants = filteredPlants.sort();
@@ -207,8 +224,39 @@ const home = props => {
       });
     }
     if(filteredChannels) {
+
+      switch(sortMethod){
+        case 'ascending':
+          filteredChannels = filteredChannels.sort((a,b) => {
+            if ( a.name < b.name ){
+              return -1;
+            }
+            if ( a.name > b.name ){
+              return 1;
+            }
+            return 0;
+          });
+          break;
+        case 'descending':
+          filteredChannels = filteredChannels.sort((a,b) => {
+            if ( a.name < b.name ){
+              return 1;
+            }
+            if ( a.name > b.name ){
+              return -1;
+            }
+            return 0;
+          });
+          break;
+        case 'byDate':
+          break;
+        default:
+          break;
+      }
+
       return filteredChannels;
     } return false;
+    
   }
 
   const filterPosts = () => {
@@ -222,6 +270,36 @@ const home = props => {
       });
     }
     if(filteredPosts) {
+      switch(sortMethod){
+        case 'ascending':
+          filteredPosts = filteredPosts.sort((a,b) => {
+            if ( a.title < b.title ){
+              return -1;
+            }
+            if ( a.title > b.title ){
+              return 1;
+            }
+            return 0;
+          });
+          break;
+        case 'descending':
+          filteredPosts = filteredPosts.sort((a,b) => {
+            if ( a.title < b.title ){
+              return 1;
+            }
+            if ( a.title > b.title ){
+              return -1;
+            }
+            return 0;
+          });
+          break;
+        case 'byDate':
+          filteredPosts = filteredPosts.sort((a,b) => moment(b.createdAt).format('YYYYMMDD') - moment(a.createdAt).format('YYYYMMDD'));
+          break;
+        default:
+          filteredPosts = filteredPosts.sort((a,b) => moment(b.createdAt).format('YYYYMMDD') - moment(a.createdAt).format('YYYYMMDD'));
+          break;
+      }
       return filteredPosts;
     } return [];
   }
@@ -232,6 +310,7 @@ const home = props => {
 
   const setResultSort = sort => {
     setSortMethod(sort);
+    console.log(sort)
   }
   
   const toogleSection = () => {
@@ -247,6 +326,48 @@ const home = props => {
     } else {
       setActiveSection('channels');
     }
+  }
+  const orderedPosts = () => {
+    let posts = featuredPosts;
+    switch(sortMethod){
+      case 'ascending':
+        posts = posts.sort((a,b) => {
+          if ( a.title < b.title ){
+            return -1;
+          }
+          if ( a.title > b.title ){
+            return 1;
+          }
+          return 0;
+        });
+        break;
+      case 'descending':
+        posts = posts.sort((a,b) => {
+          if ( a.title < b.title ){
+            return 1;
+          }
+          if ( a.title > b.title ){
+            return -1;
+          }
+          return 0;
+        });
+        break;
+      case 'byDate':
+        posts = posts.sort((a,b) => moment(b.createdAt).format('YYYYMMDD') - moment(a.createdAt).format('YYYYMMDD'));
+        break;
+      default:
+        posts = posts.sort((a,b) => {
+          if ( a.populartitlePtBr < b.populartitlePtBr ){
+            return 1;
+          }
+          if ( a.populartitlePtBr > b.populartitlePtBr ){
+            return -1;
+          }
+          return 0;
+        });
+        break;
+    }
+    return posts;
   }
 
   return(
@@ -272,6 +393,7 @@ const home = props => {
         searchTerm={setCurrentSearchTerm}
         order={setResultSort}
         placeholder={activeSection === 'channels' ? 'Buscar canal' : 'Buscar planta'}
+        activeSection={activeSection}
       />
       {activeSection === 'channels' ? 
         <div className={css.channelResults}>
@@ -282,7 +404,7 @@ const home = props => {
           {searchTerm && foundPosts && 
             <Posts posts={filterPosts()}/>}
           <h2 className={css.lastPosts}>Últimas postagens:</h2>
-          <Posts posts={featuredPosts}/>
+          <Posts posts={orderedPosts()}/>
         </div>
         :<>
           <Filters setFilters={getFilteredPlants}/>

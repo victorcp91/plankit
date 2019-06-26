@@ -89,7 +89,7 @@ const plantInfo = props => {
             <button 
               className={`${css.actionButton}
               ${insideMyGardem(plant.id) ? css.active : ''}`}
-              onClick={props.myGarden}
+              onClick={() => props.myGarden(plant)}
             >
               <img className={css.icon} src={houseIcon} alt="Meu Jardim"/>
             </button>

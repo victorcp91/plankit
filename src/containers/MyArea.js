@@ -16,15 +16,17 @@ import MyChannel from '../components/MyChannel';
 import Channels from '../components/Channels';
 import NewPost from '../components/NewPost';
 import Posts from '../components/Posts';
-// import optionsIcon from '../assets/icons/optionsIcon.svg';
+import channelIcon from '../assets/icons/channelIcon.svg';
+import postsIcon from '../assets/icons/postsIcon.svg';
+import postIcon from '../assets/icons/postIcon.svg';
 import houseIcon from '../assets/icons/houseIcon.svg';
-// import heartIcon from '../assets/icons/heartIcon.svg';
-import myWishesIcon from '../assets/icons/myWishesIcon.svg';
+import followIcon from '../assets/icons/followIcon.svg';
 import newPlantIcon from '../assets/icons/newPlantIcon.svg';
+import spinner from '../assets/icons/loading.svg';
 import { setChannels, setChannelPosts } from '../store/channels';
 
 const myArea = props => {
-  const [currentSection, setCurrentSection] = useState('following');
+  const [currentSection, setCurrentSection] = useState('myGarden');
   const [iconAnimation, setIconAnimation] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -92,17 +94,15 @@ const myArea = props => {
       case 'myGarden': 
         return houseIcon;
       case 'following':
-        return houseIcon;
-      case 'myWishes': 
-        return myWishesIcon;
+        return followIcon;
       case 'newPlant': 
         return newPlantIcon;
       case 'newPost': 
-        return houseIcon;
+        return postIcon;
       case 'myPosts': 
-        return houseIcon;
+        return postsIcon;
       case 'myChannel': 
-        return houseIcon;
+        return channelIcon;
       default:
         return null
     }
@@ -157,7 +157,7 @@ const myArea = props => {
   }
 
   return(
-   loading ? <h1>CARREGANDO</h1> 
+   loading ? <img class={css.loading} src={spinner}/> 
     :<div className={css.container}>
       <aside className={css.myAreaMenu}>
         <ul>
@@ -175,25 +175,25 @@ const myArea = props => {
           </li> */}
           <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'following' ? css.active : ''}`}>
             <button onClick={setFollowingSection}>
-              <img className={css.icon} src={houseIcon} alt="Seguindo" />
+              <img className={`${css.icon} ${css.follow}`} src={followIcon} alt="Seguindo" />
               <span className={css.label}>Seguindo</span>
             </button>
           </li>
           <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'myChannel' ? css.active : ''}`}>
             <button onClick={setMyChannelSection}>
-              <img className={css.icon} src={houseIcon} alt="Meu Canal" />
+              <img className={css.icon} src={channelIcon} alt="Meu Canal" />
               <span className={css.label}>Meu Canal</span>
             </button>
           </li>
           <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'myPosts' ? css.active : ''}`}>
             <button onClick={setMyPostsSection}>
-              <img className={css.icon} src={myWishesIcon} alt="Postagens" />
+              <img className={`${css.icon} ${css.posts}`} src={postsIcon} alt="Postagens" />
               <span className={css.label}>Minhas Postagens</span>
             </button>
           </li>
           <li className={`${css.menuItem} ${css.myGarden} ${currentSection === 'newPost' ? css.active : ''}`}>
             <button onClick={setNewPostSection}>
-              <img className={css.icon} src={myWishesIcon} alt="Nova Postagem" />
+              <img className={css.icon} src={postIcon} alt="Nova Postagem" />
               <span className={css.label}>Nova Postagem</span>
             </button>
           </li>
@@ -220,8 +220,8 @@ const myArea = props => {
         {currentSection === 'newPlant' && <NewPlant user={props.user}/>}
         {currentSection === 'myStore' &&  <SellerForm user={props.user}/>}
         {currentSection === 'myChannel' &&  <MyChannel user={props.user} channel={myChannels()}/>}
-        {currentSection === 'myPosts' && <Posts posts={myChannels() && myChannels().posts ? myChannels().posts : []}/>}
-        {currentSection === 'newPost' && <NewPost user={props.user} channel={myChannels()} plants={props.plants}/>}
+        {currentSection === 'myPosts' && <Posts order posts={myChannels() && myChannels().posts ? myChannels().posts : []}/>}
+        {currentSection === 'newPost' && <NewPost user={props.user} channel={myChannels()} plants={props.plants} setPostsSection={setMyPostsSection}/>}
       </main>
     </div>
   )

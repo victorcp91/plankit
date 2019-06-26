@@ -6,6 +6,7 @@ import css from './MyChannel.module.scss';
 import moment from 'moment';
 
 import { comparableString } from '../libs/Utils';
+import spinner from '../assets/icons/loading.svg';
 
 import DropZone from './DropZone';
 
@@ -21,6 +22,7 @@ const myChannel = props => {
   const [channelTags, setChannelTags] = useState([]);
   const [channelAbout, setChannelAbout] = useState('');
   const [newTag, setNewTag] = useState('');
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if(props.channel){
@@ -175,9 +177,13 @@ const myChannel = props => {
         profileImage: profileImageFile,
       }
     }
-
+    setSaving(true);
     Api.updateChannel(props.channel.id, newChannelInfo).then(res => {
+      setSaving(false);
       console.log('atualizado');
+    }).catch(() => {
+      console.log('erro')
+      setSaving(false);
     });
   }
 
@@ -252,6 +258,7 @@ const myChannel = props => {
 
   const createChannelDisplay = () => (
     <div className={css.requestChannelContainer}>
+      {saving && <div className={css.loadingContainer}><img src={spinner} className={css.loading}/></div>}
       {props.channel ?
         <Link className={css.channelLink} to={`/${props.channel.slug}`}>Ir para o meu canal</Link>
       : null}

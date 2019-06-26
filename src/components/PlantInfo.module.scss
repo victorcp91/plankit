@@ -16,7 +16,7 @@
   transform: scale(0.8);
   @media only screen and (min-width: 480px) { 
     max-width: 500px;
-    height: 90vh;
+    height: 80vh;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%) scale(0.8);
@@ -108,7 +108,7 @@
           border-radius: 50%;
           border: none;
           background-color: $lightGray;
-          transition: background-color .5s cubic-bezier(0.630, 1.235, 1.000, 0.965);
+          transition: background-color .5s cubic-bezier(0.630, 1.235, 1.000, 0.965), transform .2s cubic-bezier(0.630, 1.235, 1.000, 0.965);
           cursor: pointer; 
           .icon{
             width: 28px;
@@ -117,18 +117,19 @@
             top: 50%;
             transform: translate(-50%,-50%);
           }
+          &:active{
+            transform: scale(1.2);
+          }
           &.active{
             background-color: $lightGreen;
           }
         }
         &:hover{
-          .actionButton{
-            background-color: $lightGreen;
-          }
           .label{
             color: $green;
           }
         }
+        
       }
     }
   }

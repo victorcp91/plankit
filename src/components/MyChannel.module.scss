@@ -1,7 +1,24 @@
 @import '../libs/variables.scss';
+
 .requestChannelContainer{
   box-sizing: border-box;
   padding: 0 10px;
+  position: relative;
+  .loadingContainer{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255,255,255,.8);
+    z-index: 3;
+    .loading{
+      display: block;
+      width: 80px;
+      position: fixed;
+      left: 57%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
   .disclaimerMessage{
     color: $green;
     font-size: 18px;

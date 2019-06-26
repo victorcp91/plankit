@@ -5,6 +5,28 @@
   max-width: 1024px;
   margin: 0 auto;
   padding-top: 48px;
+  .loginContainerOverlay{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.5);
+    z-index: 2;
+    top: 0;
+    left: 0;
+  }
+  .loading{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 80px;
+  }
+  .notFound{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
   .about{
     margin:10px 80px;
     font-family: 'Helvetica Light';

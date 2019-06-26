@@ -13,10 +13,12 @@ import PresentationArea from '../components/PresentationArea';
 import ChannelHeader from '../components/ChannelHeader';
 import Plants from '../components/Plants';
 import Posts from '../components/Posts';
+import LoginModal from '../components/LoginModal';
 import { setChannels, setChannelPosts } from '../store/channels';
-import { deleteUser, setUser } from '../store/user';
+import { deleteUser, setUser, addFollowedChannel, removeFollowedChannel } from '../store/user';
 import { setPlants }  from  '../store/plants';
 import { createSecureContext } from 'tls';
+import spinner from '../assets/icons/loading.svg';
 
 
 const post = props => {
@@ -26,6 +28,8 @@ const post = props => {
   const [channelSlug, setChannelSlug] = useState(channel);
   const [postSlug, setPostSlug] = useState(post);
   const [channelNotFound, setChannelNotFound] = useState(false);
+  const [loginModalActive, setLoginModalActive] = useState(false);
+  const [loginDisclaimer, setLoginDisclaimer] = useState('');
 
   useEffect(() => {
     // setLoading(true); 
@@ -113,10 +117,67 @@ const post = props => {
     
   }
 
+  const follow = () => {
+    if(props.user && props.user.followedChannels){
+      let followedChannels = props.user.followedChannels.find(c => c.id === currentChannel().id);
+      if(!followedChannels){
+        addFollowedChannel(props.user, currentChannel());
+        Api.followChannel(props.user, currentChannel()).then(() => {
+          Api.getUserData(props.user.uid).then(userData => {
+            setUser({ ...userData });
+          });
+          Api.updateChannelFollowers(currentChannel(), props.user.uid).then(() => {
+            Api.getChannel(currentChannel().slug).then(res => {
+              if(res.length){
+                setChannels(res);
+              }
+            });
+          })
+        });
+      }else {
+        removeFollowedChannel(props.user, currentChannel().id);
+        Api.unfollowChannel(props.user, currentChannel().id).then(() => {
+          Api.getUserData(props.user.uid).then(userData => {
+            setUser({ ...userData });
+          });
+          Api.updateChannelFollowers(currentChannel(), props.user.uid).then(() => {
+            Api.getChannel(currentChannel().slug).then(res => {
+              if(res.length){
+                setChannels(res);
+              }
+            });
+          })
+        });
+      }
+    }else {
+      setLoginDisclaimer('Faça login para poder seguir este canal. É bem simples e rápido.')
+      setLoginModalActive(true);
+    }
+  }
+
+  const toogleLoginModal = () => {
+    setLoginModalActive(!loginModalActive);
+  }
+
+  if(loading) {
+    return (
+      <div className={css.channelContainer}>
+        <img class={css.loading} src={spinner}/>
+      </div>
+    );
+  }
+
   return(
     currentChannel() ?
     <div className={css.postContainer}>
-      <ChannelHeader channel={currentChannel()} />
+      {loginModalActive &&
+      <>
+        <span className={css.loginContainerOverlay} />
+        <LoginModal
+          close={toogleLoginModal}
+          disclaimer={loginDisclaimer}/>
+      </>}
+      <ChannelHeader channel={currentChannel()} user={props.user} follow={follow}  />  
       <h1 className={css.title}>{currentPost().title}</h1>
       {currentPost().youtubeId ?
         <div className={css.videoContainer}>

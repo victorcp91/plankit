@@ -10,8 +10,10 @@ import css from './Channel.module.scss';
 import ChannelHeader from '../components/ChannelHeader';
 import PresentationArea from '../components/PresentationArea';
 import Posts from '../components/Posts';
+import LoginModal from '../components/LoginModal';
 import { setChannels, setChannelPosts } from '../store/channels';
 import { deleteUser, setUser, addFollowedChannel, removeFollowedChannel } from '../store/user';
+import spinner from '../assets/icons/loading.svg';
 
 
 const channel = props => {
@@ -19,6 +21,8 @@ const channel = props => {
   const [loading, setLoading] = useState(true);
   const [channelSlug, setChannelSlug] = useState(props.match.params.channel);
   const [channelNotFound, setChannelNotFound] = useState(false);
+  const [loginModalActive, setLoginModalActive] = useState(false);
+  const [loginDisclaimer, setLoginDisclaimer] = useState('');
 
   useEffect(() => {
     setLoading(false);
@@ -35,7 +39,6 @@ const channel = props => {
         setLoading(false);
       }
     })
-    // props.history.push(`/`);
     
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -75,7 +78,7 @@ const channel = props => {
   if(loading) {
     return (
       <div className={css.channelContainer}>
-        <h1>CARREGANDO...</h1>
+        <img className={css.loading} src={spinner}/>
       </div>
     );
   }
@@ -89,23 +92,49 @@ const channel = props => {
           Api.getUserData(props.user.uid).then(userData => {
             setUser({ ...userData });
           });
+          Api.updateChannelFollowers(currentChannel(), props.user.uid).then(() => {
+            Api.getChannel(currentChannel().slug).then(res => {
+              if(res.length){
+                setChannels(res);
+              }
+            });
+          })
         });
       }else {
-        removeFollowedChannel(props.user, currentChannel());
-        Api.unfollowChannel(props.user, currentChannel()).then(() => {
+        removeFollowedChannel(props.user, currentChannel().id);
+        Api.unfollowChannel(props.user, currentChannel().id).then(() => {
           Api.getUserData(props.user.uid).then(userData => {
             setUser({ ...userData });
           });
+          Api.updateChannelFollowers(currentChannel(), props.user.uid).then(() => {
+            Api.getChannel(currentChannel().slug).then(res => {
+              if(res.length){
+                setChannels(res);
+              }
+            });
+          })
         });
       }
     }else {
-      console.log('faça login')
+      setLoginDisclaimer('Faça login para poder seguir este canal. É bem simples e rápido.')
+      setLoginModalActive(true);
     }
+  }
+  
+  const toogleLoginModal = () => {
+    setLoginModalActive(!loginModalActive);
   }
 
   return(
-    currentChannel() ?
+     currentChannel() ?
     <div className={css.channelContainer}>
+      {loginModalActive &&
+      <>
+        <span className={css.loginContainerOverlay} />
+        <LoginModal
+          close={toogleLoginModal}
+          disclaimer={loginDisclaimer}/>
+      </>}
       <ChannelHeader channel={currentChannel()} user={props.user} follow={follow}  />      
       <PresentationArea text={currentChannel().about} />
       {getLastPost() ? 
@@ -127,7 +156,10 @@ const channel = props => {
       :null}
     </div> : 
     <div className={css.channelContainer}>
-        <h1>CANAL NAO ENCONTRADO</h1>
+      {channelNotFound ? 
+      <h1 className={css.notFound}>CANAL NÃO ENCONTRADO</h1> :
+      <img className={css.loading} src={spinner}/>}
+
     </div>
   )
 };

@@ -5,12 +5,16 @@ import { Link } from 'react-router-dom';
 import css from './Posts.module.scss';
 
 
-const posts = React.memo(props => {
+const posts = props => {
+  let orderedPosts = props.posts;
+  if(props.order){
+    orderedPosts = orderedPosts.sort((a,b) => moment(b.createdAt).format('YYYYMMDD') - moment(a.createdAt).format('YYYYMMDD'));
+  }
 
   return(
     <div className={css.postsContainer}>
-      {props.posts.map(post => 
-        (<Link key={post.slug} className={css.postLink} to={`/${post.channelSlug}/${post.slug}`}>
+      {orderedPosts.map(post => 
+        (<Link key={`${post.slug}-${post.id}`} className={css.postLink} to={`/${post.channelSlug}/${post.slug}`}>
           <div className={css.postCard}>
             <div className={css.imageContainer}>
               <img className={css.image} src={post.image}/>
@@ -26,6 +30,6 @@ const posts = React.memo(props => {
       }
     </div>
   );
-});
+};
 
 export default posts;

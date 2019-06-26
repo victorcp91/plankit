@@ -22,7 +22,7 @@ const search = props => {
   }
 
   const handleSort = e => {
-    
+    props.order(e.currentTarget.value);
   }
 
 
@@ -49,7 +49,7 @@ const search = props => {
       <option value="">Ordenar</option>
       <option value="ascending">Ordem Alfabética Crescente</option>
       <option value="descending">Ordem Alfabética Decrescente</option>
-      <option value="byDate">Mais Recente</option>
+      {props.activeSection === 'channels' ? <option value="byDate">Mais Recente</option> : null}
     </select>}
   </div>
   );

@@ -18,7 +18,7 @@ const channelHeader = props => {
       }
     } return false;
   }
-
+  
   return (
     <div className={css.channelHeader}>
       <img className={`${css.cover} ${props.post ? css.post : ''}`} src={props.channel.coverImage }/>
@@ -29,6 +29,13 @@ const channelHeader = props => {
         <Link className={css.link} to={`/${props.channel.slug}`}>
           <h1 className={css.name}>{props.channel.name}</h1>
         </Link>
+        {props.channel.subscribers.length ?
+          <span className={css.subscribers}>
+            {props.channel.subscribers.length === 1 ?
+            `${props.channel.subscribers.length} seguidor`: 
+            `${props.channel.subscribers.length} seguidores`}
+          </span>
+        : null}
         <p className={css.description}>{props.channel.description}</p>
         <div className={`${css.followArea} ${isFollowing() && css.active}`}>
           <button id="follow" onClick={props.follow} className={css.follow}>
@@ -37,6 +44,7 @@ const channelHeader = props => {
           <label htmlFor="follow">{isFollowing() ? 'Seguindo' : 'Seguir'}</label>
         </div>
       </div>
+      
     </div>
   )
 };

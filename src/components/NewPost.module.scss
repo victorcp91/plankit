@@ -1,6 +1,21 @@
 @import '../libs/variables.scss';
 
 .newPostContainer{
+  .loadingContainer{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255,255,255,.8);
+    z-index: 3;
+    .loading{
+      display: block;
+      width: 80px;
+      position: fixed;
+      left: 57%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
   label{
     display: block;
     margin: 25px 0 5px 0;

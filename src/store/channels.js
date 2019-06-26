@@ -8,10 +8,12 @@ export function setChannels(channels) {
     channels.forEach(channel => {
       const index = currentChannels.findIndex(el => el.id === channel.id);
       if(index > -1){
-        currentChannels[index] = { ...currentChannels[index], ...channel};
+        currentChannels[index] = { ...currentChannels[index], ...channel, subscribers: channel.subscribers};
       } else {
         currentChannels.push(channel);
+        console.log('teste',currentChannels);
       }
+      
     });
   } 
   getStore().dispatch({ type: SET_CHANNELS, currentChannels });

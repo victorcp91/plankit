@@ -44,7 +44,7 @@
       margin: 1.5%;
       background-color: $lightGray;
       width: 48%;
-      height:350px;
+      height:320px;
       margin: 1%;
     }
     @media only screen and (min-width: 600px) { 
@@ -79,7 +79,7 @@
         max-height: none;
         max-width: none;
         width: 100%;
-        height: 40%;
+        height: 45%;
         display: block;
       }
     }
@@ -115,7 +115,7 @@
         margin-bottom: 5px;
         color: $gray;
         span{
-          display: block;
+          display: inline-block;
           margin-right: 5px;
         }
       }
@@ -123,6 +123,7 @@
         font-size: 12px;
         font-family: 'Helvetica Light';
       }
+      
       .plantPrice{
         font-size: 12px;
         .green{
@@ -137,7 +138,7 @@
       bottom: 20px;
       @media only screen and (min-width: 480px) { 
         position: relative;
-        height: 40%;
+        height: 35%;
         width: 100%;
         bottom: initial;
         left: initial;
@@ -163,7 +164,7 @@
             position: absolute;
             opacity: 0;
             left: 50%;
-            top: 75%;
+            top: 50%;
             transform: translate(-50%,-50%);
             font-size: 12px;
           }
@@ -180,7 +181,7 @@
           box-shadow: inset 1px 1px 5px $lightShadow;
           cursor: pointer;
           pointer-events: auto;
-          transition: background-color .5s cubic-bezier(0.630, 1.235, 1.000, 0.965);
+          transition: background-color .5s cubic-bezier(0.630, 1.235, 1.000, 0.965), transform .2s cubic-bezier(0.630, 1.235, 1.000, 0.965);
           @media only screen and (min-width: 480px) { 
             position: absolute;
             width: 70px;
@@ -189,9 +190,6 @@
             &.small{
               width: 50px;
               height: 50px;
-            }
-            &:hover{
-              background-color: $lightGreen;
             }
           }
           
@@ -204,9 +202,12 @@
           }
           &.garden{
             @media only screen and (min-width: 480px) { 
-              top: 35%;
-              left: 25%;
+              top: 50%;
+              left: 10%;
               transform: translate(-50%, -50%);
+            }
+            &:active{
+              transform: translate(-50%, -50%) scale(1.1);
             }
             .icon{
               left: 50%;
@@ -221,8 +222,8 @@
           }
           &.info{
             @media only screen and (min-width: 480px) { 
-              top: 35%;
-              right: 25%;
+              top: 50%;
+              right: 10%;
               transform: translate(50%, -50%);
             }
             .icon{

@@ -28,6 +28,7 @@
     }
   }
   .info{
+    position: relative;
     padding: 10px 20px 20px 20px;
     display: inline-block;
     vertical-align: top;
@@ -46,9 +47,16 @@
     }
     .name{
       font-size: 20px;
+      display: block;
       @media only screen and (min-width: 600px) { 
         font-size: 30px;
       }
+    }
+    .subscribers{
+      display: block;
+      color: $green;
+      min-height: 5px;
+      font-size: 14px;
     }
     .description{
       margin-top: 5px;
